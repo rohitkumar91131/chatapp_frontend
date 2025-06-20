@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 import { useEffect } from 'react';
 import ProtectedRoute from './components/ProtectedRoute';
 import QR_CODE_LOGIN from './Pages/Login/QR_CODE_LOGIN';
-import { QrCodeScanner } from 'react-simple-qr-code-scanner';
+import QRScanComponent from './Pages/Login/QR_CODE_SCANNER';
 const socket = io("http://localhost:4000", {
   withCredentials: true,
   autoConnect:false
@@ -34,7 +34,7 @@ export default function App(){
           <Route  path='/login' element={<Login/>} />
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path='/qr-login' element={<QR_CODE_LOGIN/>} />
-          <Route path="/qr-scan" element={<QrCodeScanner/>} />
+          <Route path="/qr-scan" element={<QRScanComponent/>} />
        </Routes>
       </BrowserRouter>
   )

@@ -1,26 +1,25 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { QrCodeScanner } from "react-simple-qr-code-scanner";
 
 export default function App() {
-  const [scannedData, setScannedData] = useState("");
+  const [result, setResult] = useState("");
 
   return (
     <div>
+      <h1>QR Scanner</h1>
       <QrCodeScanner
-        onResult={(result, rawResult) => {
-          if (result) {
-            setScannedData(result);  // Save to state
-            console.log("Scanned:", result);
+        onResult={(scannedText, rawResult) => {
+          if (scannedText && !result) {
+            setResult(scannedText);
+            console.log("Scanned result:", scannedText);
           }
         }}
         onError={(error) => {
           console.error("Scanner Error:", error);
         }}
-        facingMode={"environment"}
+        facingMode="environment"
       />
-
-      <h2>Scanned Result:</h2>
-      <p>{scannedData || "No QR code scanned yet"}</p>
+      <p>Scanned Result: {result}</p>
     </div>
   );
 }
