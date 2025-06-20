@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useRef} from 'react'
 import {ToastContainer,toast} from 'react-toastify'
 
 export default function Login_Signup_Card({formName ,accountAlready}){
+    const navigate = useNavigate();
     const [formData,setFormData] =useState({
         name:"",
         email:"",
@@ -17,7 +18,7 @@ export default function Login_Signup_Card({formName ,accountAlready}){
         e.preventDefault();
         const {confirmPassword, ...dataToSend} = formData;
         try{
-            let res = await fetch(`https://authentication-backend-kappa.vercel.app/${formName.toLowerCase()}`,{
+            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/${formName.toLowerCase()}`,{
                 method:"POST",
                 "credentials":"include",
                 body : JSON.stringify(dataToSend),
@@ -32,6 +33,13 @@ export default function Login_Signup_Card({formName ,accountAlready}){
             
             const toastMessage = data.msg;
             toast(toastMessage);
+            if(formName === "login" && data.success){
+                navigate("/")
+            }
+            if(formName === "signup" && data.success){
+                toast(data.msg)
+                navigate("/login");
+            }
         }
         catch(err){
             let r = err.message;

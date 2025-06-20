@@ -2,23 +2,32 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {ToastContainer,toast} from 'react-toastify'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+console.log(BACKEND_URL)
 export default function Home(){
     const [user,setUser ] = useState([]);
     async function verify(){
-        let res = await fetch("https://authentication-backend-kappa.vercel.app/verifyToken",{
+        try{
+          let res = await fetch(`${BACKEND_URL}/chat/verifyLogin`,{
             method :"GET",
             credentials :'include'
-        });
-        let data = await res.json();
-        setUser(data);
-        toast(data.msg);
+          });
+          let data = await res.json();
+          console.log(data)
+          setUser(data);
+          toast(data.msg);
+        }
+        catch(err){
+          toast(err.message)
+          console.log(err)
+        }
     }
     const handleClick =()=>{
         verify();
     }
     const handleLogout = async()=>{
       try{
-            let res =  await fetch("https://authentication-backend-kappa.vercel.app/logout",{
+            let res =  await fetch(`${import.meta.env.VITE_BACKEND_URL}/logout`,{
                method : "POST",
               credentials : "include"
            });
