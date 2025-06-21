@@ -132,7 +132,12 @@ export default function Login_Signup_Card({formName ,accountAlready}){
                     }
                     </div>
                 </div>
-                <button disabled={!passwordSame} className={`w-30 bg-red-500 border rounded-md p-3 ${!passwordSame ? "cursor-not-allowed opacity-50": "text-white" }`} >{formName}</button>
+               <div className="flex gap-4">
+               <button disabled={!passwordSame} className={`w-30 bg-red-500 border rounded-md p-3 ${!passwordSame ? "cursor-not-allowed opacity-50": "text-white" }`} >{formName}</button>
+                {
+                    formName === "login" && <Link className="w-30 bg-red-500 border rounded-md p-3 text-white flex items-center justify-center" to="/qr-login">Login via QRCode</Link>
+                }
+               </div>
                 <ToastContainer position="top-right" autoClose={3000} />
                 {
                     accountAlready ? 

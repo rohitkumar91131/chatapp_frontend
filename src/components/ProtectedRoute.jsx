@@ -27,7 +27,7 @@ export default function ProtectedRoute ({children}){
                 toast(err.message)
             }
         }
-        //check_Authentication();
+        check_Authentication();
     },[])
     return (
         <div>
