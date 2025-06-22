@@ -8,7 +8,7 @@ export default function ProtectedRoute ({children}){
     useEffect(()=>{
         async function check_Authentication (){
             try{
-                let res = await fetch(`${BACKEND_URL}/verifyToken`,{
+                let res = await fetch(`${BACKEND_URL}/chat/verifyLogin`,{
                     method : "GET",
                     credentials : "include"
                 })

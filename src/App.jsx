@@ -7,10 +7,15 @@ import { useEffect } from 'react';
 import ProtectedRoute from './components/ProtectedRoute';
 import QR_CODE_LOGIN from './Pages/Login/QR_CODE_LOGIN';
 import QRScanComponent from './Pages/Login/QR_CODE_SCANNER';
-const socket = io("http://localhost:4000", {
-  withCredentials: true,
-  autoConnect:false
-});
+import HomePage from './Pages/HomePage/Home';
+import { SocketContext } from './context/Socket/SocketContext';
+import {  UserProvider } from './context/User/UserContext';
+
+
+const socket = io(import.meta.env.VITE_BACKEND_URL,{
+  withCredentials : true,
+  autoConnect : false
+})
 
 export default function App(){
   // useEffect(() => {
@@ -28,14 +33,20 @@ export default function App(){
   //   };
   // }, []);
   return (
+    <SocketContext.Provider value={socket}>
+          <UserProvider>
       <BrowserRouter>
        <Routes>
+          <Route path='/' element={<HomePage/>} />
           <Route  path='/signup' element={<Signup/>}/>
           <Route  path='/login' element={<Login/>} />
-          <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
+          <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path='/qr-login' element={<QR_CODE_LOGIN/>} />
           <Route path="/qr-scan" element={<QRScanComponent/>} />
        </Routes>
       </BrowserRouter>
+      </UserProvider>
+    </SocketContext.Provider>  
+
   )
 }
