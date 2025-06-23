@@ -22,7 +22,7 @@ export default function Users() {
         console.log(id);
 
         // on tapping on an user a room will be created
-        socket.emit("create-room",id);
+       socket.emit("create-or-join-room",id);
     }
    
   return (

@@ -14,6 +14,10 @@ export default function Chat() {
       }
     );
     useEffect(()=>{
+      socket.emit("load-all-chats-of-a specif-roomId",id);
+      socket.on("all-chat-of-a-specific-roomId-was-sended-from-server",(chatData)=>{
+        setChatData(chatData);
+      })
       socket.emit("give-specific-user-data-from-id-for-chat",id);
       socket.on("user-specific-data-from-id-for-chat",(data)=>{
        setUserData(data);
@@ -35,10 +39,10 @@ export default function Chat() {
       ))
       })
       
-      socket.emit("send-all-chats",id)
-      socket.on("all-chats-sended",(chatData)=>{
-        setChatData(chatData);
-      })
+      //socket.emit("send-all-chats",id)
+      // socket.on("all-chats-sended",(chatData)=>{
+      //   setChatData(chatData);
+      // })
 
       return ()=>{
         socket.off("new-messages");
@@ -67,7 +71,8 @@ export default function Chat() {
         return;
       }
       // this is to send message
-      socket.emit("send-message",message);
+      socket.emit("send-chat-to-a-roomId",message);
+      //socket.emit("send-message",message);
       setMessage(prev=>({
         ...prev,
         msg : ""
