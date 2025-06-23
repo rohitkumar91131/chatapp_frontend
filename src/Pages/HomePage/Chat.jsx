@@ -14,10 +14,19 @@ export default function Chat() {
       }
     );
     useEffect(()=>{
-      socket.emit("load-all-chats-of-a specif-roomId",id);
+
+      if(!id){
+        return;
+      }
+
+      // it will load all the chats of a room
+      socket.emit("load-all-chats-of-a-specific-roomId",id);
       socket.on("all-chat-of-a-specific-roomId-was-sended-from-server",(chatData)=>{
         setChatData(chatData);
       })
+
+
+      // this is to get the user detail on which user has tap on
       socket.emit("give-specific-user-data-from-id-for-chat",id);
       socket.on("user-specific-data-from-id-for-chat",(data)=>{
        setUserData(data);
@@ -32,7 +41,8 @@ export default function Chat() {
         id : id
       }))
 
-      socket.on("new-messages",(data)=>{
+      // this is to get new message
+      socket.on("new-message",(data)=>{
         setChatData(prev=>(
          [ ...prev,
           data]
@@ -45,9 +55,9 @@ export default function Chat() {
       // })
 
       return ()=>{
-        socket.off("new-messages");
+        socket.off("new-message");
         socket.off("user-specific-data-from-id-for-chat");
-        socket.on("all-chats-sended")
+        socket.off("all-chat-of-a-specific-roomId-was-sended-from-server");
       }
       
     },[id])

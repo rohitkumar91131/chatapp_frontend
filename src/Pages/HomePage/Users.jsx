@@ -13,6 +13,11 @@ export default function Users() {
         socket.on("load-users",(data)=>{
            setAllUSers(data)
         })
+
+
+        return ()=>{
+          socket.off("load-users")
+        }
     },[])
 
     const handleUserClick = (id)=>{
