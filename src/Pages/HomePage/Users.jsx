@@ -1,32 +1,32 @@
 import { useEffect, useRef, useState } from "react";
 import { useSocket } from "../../context/Socket/SocketContext"
 import { useUser } from "../../context/User/UserContext";
+import { tl } from "../../ui/gsap";
 
 export default function Users() {
     const socket = useSocket();
     const userRef = useRef("");
     const {id ,setId} = useUser();
-    
-
     const [allUsers , setAllUSers] = useState([]);
+
     useEffect(()=>{
         socket.on("load-users",(data)=>{
-           setAllUSers(data)
-        })
-
+           setAllUSers(data);
+        });
 
         return ()=>{
-          socket.off("load-users")
+          socket.off("load-users");
         }
-    },[])
+    },[]);
 
     const handleUserClick = (id)=>{
         userRef.current = id;
         console.log(userRef);
-        setId(userRef.current)
+        setId(userRef.current);
         console.log(id);
+        tl.play();
 
-        // on tapping on an user a room will be created
+        // on tapping on a user a room will be created
        socket.emit("create-or-join-room",id);
     }
    
@@ -39,7 +39,6 @@ export default function Users() {
                 key={index} 
                 className="w-full h-[50px] flex items-center justify-center border  border-collapse"
                 onClick={()=>handleUserClick(user._id)}
-                
             >
                 {JSON.stringify(user?.name)}
             </p>
@@ -50,5 +49,3 @@ export default function Users() {
     </div>
   )
 }
-
-

@@ -40,7 +40,7 @@ export default function App(){
           <Route path='/' element={<HomePage/>} />
           <Route  path='/signup' element={<Signup/>}/>
           <Route  path='/login' element={<Login/>} />
-          <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>} />
+          <Route path='/home' element={<Home/>} />
           <Route path='/qr-login' element={<QR_CODE_LOGIN/>} />
           <Route path="/qr-scan" element={<QRScanComponent/>} />
        </Routes>
