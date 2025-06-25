@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useSocket } from "../../context/Socket/SocketContext"
 import { useUser } from "../../context/User/UserContext";
-import { tl } from "../../ui/gsap";
+import { Slide1Animation, slide1ref, slide2ref } from "../../ui/gsap";
+
 
 export default function Users() {
     const socket = useSocket();
@@ -24,7 +25,10 @@ export default function Users() {
         console.log(userRef);
         setId(userRef.current);
         console.log(id);
-        tl.play();
+
+
+        Slide1Animation(slide1ref.current ,slide2ref.current)
+
 
         // on tapping on a user a room will be created
        socket.emit("create-or-join-room",id);

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/User/UserContext"
 import { useSocket } from "../../context/Socket/SocketContext";
+import { Slide2Animation } from "../../ui/gsap";
 
 export default function Chat() {
     const {id} = useUser();
@@ -56,12 +57,6 @@ export default function Chat() {
       
     },[id]);
 
-    if(!id){
-      return (
-        <p className="flex text-3xl justify-center align-items h-screen">Start Chatting </p>
-      );
-    }
-
     const handleInputChange = (e)=>{
       let {value, name} = e.target;
       setMessage(prev=>({
@@ -85,12 +80,20 @@ export default function Chat() {
       }));
     }
 
+    // if(!id){
+    //   return (
+    //     <p className="flex text-3xl justify-center align-items h-screen w-full">Start Chatting </p>
+    //   );
+    // }
+    // if(!userData){
+    //   return <p>Loading...</p>
+    // }
     
   return (
     <div className="w-full h-screen grid grid-rows-[1fr_9fr_1fr]">
       <div className="w-full h-[50px] flex gap-2 items-center !ml-3">
         <img src="https://i.ibb.co/zVvrpt7w/dpPhoto.webp" className="w-[50px] h-[50px] rounded-full"/>
-        <p>{userData?.name}</p>
+        <p onClick={()=>Slide2Animation()}>{userData?.name }</p>
         {/* <p>{userData && JSON.stringify(userData)}</p> */}
       </div>
 
