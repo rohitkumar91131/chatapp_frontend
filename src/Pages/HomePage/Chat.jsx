@@ -85,22 +85,31 @@ export default function Chat() {
       }));
     }
 
+    
   return (
     <div className="w-full h-screen grid grid-rows-[1fr_9fr_1fr]">
       <div className="w-full h-[50px] flex gap-2 items-center !ml-3">
         <img src="https://i.ibb.co/zVvrpt7w/dpPhoto.webp" className="w-[50px] h-[50px] rounded-full"/>
         <p>{userData?.name}</p>
+        {/* <p>{userData && JSON.stringify(userData)}</p> */}
       </div>
 
-      <div className="max-w-full w-full">
-        {id}
+      <div className="max-w-full w-full overflow-y-scroll relative">
+        {/* {id} */}
         {
           chatData.length > 0 ?
           chatData.map((value,index)=>(
-            <p key={index}>{value.msg}</p>
+            <div>
+                          <p 
+                 key={index} 
+                 className={`!px-4 !py-2 rounded-xl max-w-xs break-words text-2xl  ${id !== value.receiverID.toString() ? "absolute left-0" : "absolute right-0"}`}
+            >   {value.msg}
+            </p>
+            <br/>
+            </div>  
           ))
           :
-          <p>Loading Chats</p>
+          <p>No previous chat</p>
         }
       </div>
 

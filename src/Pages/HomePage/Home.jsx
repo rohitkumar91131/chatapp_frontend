@@ -27,7 +27,7 @@ export default function HomePage() {
         <div className="border-r overflow-y-auto">
           <Users />
         </div>
-        <div className="overflow-y-auto">
+        <div className="overflow-y-hidden overflow-x-hidden">
           <Chat />
         </div>
       </div>
