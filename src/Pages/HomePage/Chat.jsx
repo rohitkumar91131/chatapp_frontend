@@ -45,6 +45,9 @@ export default function Chat() {
   useEffect(() => {
     if (!id) return;
 
+    socket.emit("create-or-join-room",id);
+
+
     socket.emit("load-all-chats-of-a-specific-roomId", id);
     socket.on("all-chat-of-a-specific-roomId-was-sended-from-server", (chatData) => {
       setChatData(chatData);

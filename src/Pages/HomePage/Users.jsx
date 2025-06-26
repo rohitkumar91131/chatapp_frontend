@@ -31,7 +31,6 @@ export default function Users() {
 
 
         // on tapping on a user a room will be created
-       socket.emit("create-or-join-room",id);
     }
    
   return (
