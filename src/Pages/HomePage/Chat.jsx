@@ -1,130 +1,127 @@
 import { useEffect, useRef, useState } from "react";
-import { useUser } from "../../context/User/UserContext"
+import { useUser } from "../../context/User/UserContext";
 import { useSocket } from "../../context/Socket/SocketContext";
 import { Slide2Animation } from "../../ui/gsap";
 
 export default function Chat() {
-    const {id} = useUser();
-    const socket = useSocket();
-    const [userData , setUserData] = useState();
-    const [chatData ,setChatData ] = useState([]);
-    const [message , setMessage] = useState(
-      {
-        msg : "",
-        to : `${id}`
-      }
-    );
+  const { id } = useUser();
+  const socket = useSocket();
+  const [userData, setUserData] = useState();
+  const [chatData, setChatData] = useState([]);
+  const [message, setMessage] = useState({ msg: "", to: `${id}` });
 
-    useEffect(()=>{
+  function formatWhatsAppDate(dateStr) {
+    const today = new Date();
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const msgDate = new Date(dateStr);
+    const msgMidnight = new Date(msgDate.getFullYear(), msgDate.getMonth(), msgDate.getDate());
+    const diffTime = todayMidnight - msgMidnight;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
-      if(!id){
-        return;
-      }
-
-      // it will load all the chats of a room
-      socket.emit("load-all-chats-of-a-specific-roomId",id);
-      socket.on("all-chat-of-a-specific-roomId-was-sended-from-server",(chatData)=>{
-        setChatData(chatData);
-      });
-
-      // this is to get the user detail on which user has tap on
-      socket.emit("give-specific-user-data-from-id-for-chat",id);
-      socket.on("user-specific-data-from-id-for-chat",(data)=>{
-       setUserData(data);
-      });
-
-      console.log("id" + id);
-      console.log("msg -" + JSON.stringify(message));
-
-      setMessage(prev=>({
-        msg : "",
-        id : id
-      }));
-
-      // this is to get new message
-      socket.on("new-message",(data)=>{
-        setChatData(prev=>(
-         [ ...prev,
-          data]
-      ));
-      });
-
-      return ()=>{
-        socket.off("new-message");
-        socket.off("user-specific-data-from-id-for-chat");
-        socket.off("all-chat-of-a-specific-roomId-was-sended-from-server");
-      }
-      
-    },[id]);
-
-    const handleInputChange = (e)=>{
-      let {value, name} = e.target;
-      setMessage(prev=>({
-        ...prev,
-        msg : value
-      }));
-      console.log(message);
+    if (diffDays === 0) return "Today";
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) {
+      return msgDate.toLocaleDateString("en-IN", { weekday: "long" });
     }
+    return msgDate.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  }
 
-    const handleMessageSubmit = (e) =>{
-      e.preventDefault();
-      if(!message.msg){
-        return;
+  const groupMessagesByDate = (messages) => {
+    const groups = {};
+    messages.forEach((msg) => {
+      const label = formatWhatsAppDate(msg.created_At);
+      if (!groups[label]) {
+        groups[label] = [];
       }
+      groups[label].push(msg);
+    });
+    return groups;
+  };
 
-      // this is to send message
-      socket.emit("send-chat-to-a-roomId",message);
-      setMessage(prev=>({
-        ...prev,
-        msg : ""
-      }));
-    }
+  useEffect(() => {
+    if (!id) return;
 
-    // if(!id){
-    //   return (
-    //     <p className="flex text-3xl justify-center align-items h-screen w-full">Start Chatting </p>
-    //   );
-    // }
-    // if(!userData){
-    //   return <p>Loading...</p>
-    // }
-    
+    socket.emit("load-all-chats-of-a-specific-roomId", id);
+    socket.on("all-chat-of-a-specific-roomId-was-sended-from-server", (chatData) => {
+      setChatData(chatData);
+    });
+
+    socket.emit("give-specific-user-data-from-id-for-chat", id);
+    socket.on("user-specific-data-from-id-for-chat", (data) => {
+      setUserData(data);
+    });
+
+    setMessage((prev) => ({ msg: "", id: id }));
+
+    socket.on("new-message", (data) => {
+      setChatData((prev) => [...prev, data]);
+    });
+
+    return () => {
+      socket.off("new-message");
+      socket.off("user-specific-data-from-id-for-chat");
+      socket.off("all-chat-of-a-specific-roomId-was-sended-from-server");
+    };
+  }, [id]);
+
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setMessage((prev) => ({ ...prev, msg: value }));
+  };
+
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    if (!message.msg) return;
+    socket.emit("send-chat-to-a-roomId", message);
+    setMessage((prev) => ({ ...prev, msg: "" }));
+  };
+
+  const groupedMessages = groupMessagesByDate(chatData);
+
   return (
     <div className="w-full h-screen grid grid-rows-[1fr_9fr_1fr]">
-      <div className="w-full h-[50px] flex gap-2 items-center !ml-3">
-        <img src="https://i.ibb.co/zVvrpt7w/dpPhoto.webp" className="w-[50px] h-[50px] rounded-full"/>
-        <p onClick={()=>Slide2Animation()}>{userData?.name }</p>
-        {/* <p>{userData && JSON.stringify(userData)}</p> */}
+      <div className="w-full h-[60px] flex gap-2 items-center !ml-3">
+        <img src="return.svg" className="block md:hidden" onClick={Slide2Animation} />
+        <img src="https://i.ibb.co/zVvrpt7w/dpPhoto.webp" className="w-[50px] h-[50px] rounded-full" />
+        <p>{userData?.name}</p>
       </div>
 
-      <div className="max-w-full w-full overflow-y-scroll relative">
-        {/* {id} */}
-        {
-          chatData.length > 0 ?
-          chatData.map((value,index)=>(
-            <div>
-                          <p 
-                 key={index} 
-                 className={`!px-4 !py-2 rounded-xl max-w-xs break-words text-2xl  ${id !== value.receiverID.toString() ? "absolute left-0" : "absolute right-0"}`}
-            >   {value.msg}
-            </p>
-            <br/>
-            </div>  
-          ))
-          :
-          <p>No previous chat</p>
-        }
+      <div className="max-w-full w-full overflow-y-scroll  p-2">
+        {Object.entries(groupedMessages).map(([label, messages]) => (
+          <div key={label} className="!space-y-2">
+            <p className="text-center text-xs text-gray-500 mb-2">{label}</p>
+            {messages.map((value, index) => (
+              <div
+                key={index}
+                className={`flex ${id !== value.receiverID.toString() ? "justify-start" : "justify-end"}`}
+              >
+                <div className="border bg-red-500 rounded-md border-black flex max-w-[80%]">
+                  <p className="px-4 py-2 text-2xl">{value.msg}</p>
+                  <p className="self-end text-xs px-2">
+                    {new Date(value.created_At).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
 
       <form onSubmit={handleMessageSubmit} className="grid grid-cols-[8fr_2fr]">
-        <input 
-            className="border hover:outline-green-500 "
-            onChange={handleInputChange}
-            value={message.msg}
-            autoFocus
+        <input
+          className="border hover:outline-green-500"
+          onChange={handleInputChange}
+          value={message.msg}
         />
-        <button className="border flex items-center justify-center !p-1 bg-green-500">Send</button>
+        <button className="border flex items-center justify-center p-1 bg-green-500">Send</button>
       </form>
     </div>
-  )
+  );
 }
