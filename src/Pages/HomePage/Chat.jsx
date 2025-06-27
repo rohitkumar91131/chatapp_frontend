@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/User/UserContext";
 import { useSocket } from "../../context/Socket/SocketContext";
-import { Slide2Animation } from "../../ui/gsap";
+import { Slide2Animation, slide2ref, VideoCallAnimation, videoCallRef } from "../../ui/gsap";
 
 export default function Chat() {
   const { id } = useUser();
@@ -85,12 +85,25 @@ export default function Chat() {
 
   const groupedMessages = groupMessagesByDate(chatData);
 
+
+  const handleVideocall = (id)=>{
+    console.log("Refs:", videoCallRef.current, slide2ref.current);
+    VideoCallAnimation(videoCallRef.current, slide2ref.current);
+  }
+
   return (
     <div className="w-full h-screen grid grid-rows-[1fr_9fr_1fr]">
-      <div className="w-full h-[60px] flex gap-2 items-center !ml-3">
+      <div className="w-full h-[60px] flex gap-2 items-center  !ml-3">
         <img src="return.svg" className="block md:hidden" onClick={Slide2Animation} />
         <img src="https://i.ibb.co/zVvrpt7w/dpPhoto.webp" className="w-[50px] h-[50px] rounded-full" />
         <p>{userData?.name}</p>
+        <div>
+        <img 
+           src="video-calling.png" 
+           className="w-[40px] h-[40px] flex-end"
+           onClick={handleVideocall}
+        />
+        </div>
       </div>
 
       <div className="max-w-full w-full overflow-y-scroll  p-2">

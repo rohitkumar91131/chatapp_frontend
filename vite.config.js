@@ -10,5 +10,8 @@ export default defineConfig({
   base: '/',
   server: {
     historyApiFallback: true
-  }
+  },
+  define: {
+    global: {},
+  },
 })

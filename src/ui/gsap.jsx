@@ -5,15 +5,23 @@ import { createRef } from 'react';
 
 
 const mm = gsap.matchMedia();
-let tl;
+let tl ;
+let tl2;
 
 mm.add("(max-width:768px)",()=>{
   tl = gsap.timeline({
     paused : true
   })
+  tl2 = gsap.timeline({
+    paused : true
+  })
+
+
 
   return ()=>{
     tl.kill();
+    tl2.kill();
+    tl2 = null;
     tl = null;
   }
 })
@@ -41,3 +49,20 @@ export const Slide2Animation = ()=>{
 
 export const slide1ref = createRef();
 export const slide2ref = createRef();
+
+
+export const VideoCallAnimation = (element ,element2)=>{
+  tl2.clear();
+  tl2.to(element,{
+    x : "-200%",
+    duration : 0.2
+  },1)
+  tl2.to(element2,{
+    x :"-200%",
+    duration:0.2
+  },1)
+  tl2.play();
+}
+
+
+export const videoCallRef = createRef();

@@ -2,7 +2,8 @@ import Chat from "./Chat";
 import Users from "./Users";
 import { useEffect, useRef,  } from "react";
 import { useSocket } from "../../context/Socket/SocketContext";
-import { slide1ref, slide2ref } from "../../ui/gsap";
+import { slide1ref, slide2ref, videoCallRef } from "../../ui/gsap";
+import VideoCall from "./Video";
 
 export default function HomePage() {
   const socket = useSocket();
@@ -24,7 +25,7 @@ export default function HomePage() {
   }, []);
 
     return (
-      <div className="flex md:grid md:grid-cols-[1fr_1fr]   h-screen w-screen overflow-hidden">
+      <div className="flex md:grid md:grid-cols-[1fr_1fr_1fr]   h-screen w-screen overflow-hidden">
         <div 
             className="border- block overflow-y-auto h-screen w-screen flex-shrink-0 md:w-full md:h-full"
             ref={slide1ref}
@@ -36,6 +37,12 @@ export default function HomePage() {
             ref={slide2ref}
         >
           <Chat />
+        </div>
+        <div 
+             className="h-screen w-screen flex-shrink-0 md:h-full md:w-full z-index-3"   
+             ref={videoCallRef}
+        >  
+          <VideoCall/>
         </div>
       </div>
     );
