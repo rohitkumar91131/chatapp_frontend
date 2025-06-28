@@ -42,6 +42,7 @@ export default function VideoCall() {
     socket.on("offer",async({offer , from})=>{
       remoteSocketIdRef.current = from;
       await createPeerConnection();
+      await peerConnectionRef.current.setRemoteDescription(offer);
       const answer = await peerConnectionRef.current.createAnswer();
       await peerConnectionRef.current.setLocalDescription(answer);
       socket.emit("answer",{answer , to : from});
@@ -54,7 +55,7 @@ export default function VideoCall() {
     })
 
 
-    socket.on("ice-canditate",async({canditate , from})=>{
+    socket.on("ice-candidate",async({candidate , from})=>{
       try{
         await peerConnectionRef.current.addIceCandidate(candidate);
       }
