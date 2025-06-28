@@ -65,11 +65,29 @@ export default function VideoCall() {
     })
 
 
+    socket.on("end-call",()=>{
+      if(peerConnectionRef.current){
+        peerConnectionRef.current.close();
+        peerConnection.current = null;
+      }
+
+      if(myStreamRef.current){
+        myStreamRef.current.getTracks().forEach(track => track.stop());
+        myStream.current= null
+      }
+
+      setStatus("Call Ended")
+      alert("The other user has ended the call");
+      
+    })
+
+
     return () => {
       socket.off("user-joined");
       socket.off("offer");
       socket.off("answer");
       socket.off("ice-candidate");
+      socket.off("end-call")
     };
     
 
@@ -119,6 +137,21 @@ export default function VideoCall() {
     console.log("Calling")
 
   }
+
+  const endCall = ()=>{
+    if(peerConnectionRef.current){
+      peerConnectionRef.current.close();
+      peerConnectionRef.current = null;
+    }
+
+    if(myStreamRef.current){
+      myStreamRef.current.getTracks().forEach(track => track.stop());
+      myStreamRef.current = null;
+    }
+
+    socket.emit("end-call",{to : remoteSocketIdRef.current});
+    setStatus("Call Ended")
+  }
   return (
     <div className="grid grid-rows-[1fr_1fr_1fr] h-screen">
       <div>
@@ -126,8 +159,13 @@ export default function VideoCall() {
             className="border !p-2 bg-red-500"
             onClick={startCall}
         >{status}</button>
-        {id}
+        <button className={peerConnectionRef.current ? "!p-2 border bg-green-500 " : "hidden"}
+                onClick={endCall}
+        
+        >End Call</button>
+
       </div>
+
       <div className="w-full h-full object-cover">
         <video 
            ref={myVideoRef}
