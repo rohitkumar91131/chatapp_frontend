@@ -114,11 +114,33 @@ export default function Chat() {
            className="w-[40px] h-[40px] flex-end"
            onClick={handleVideocall}
         />
-        <p>{onlineStatus && onlineStatus}</p>
+
+        {
+          onlineStatus=== "offline" && userData?.lastSeen ? 
+          <p>{new Date(userData?.lastSeen).toLocaleString()}</p>
+          :
+          <p>online</p>
+        }
+
+        {/* {
+          onlineStatus === "online" ?
+          (<p>Online</p>)
+          :
+          ( <p>last seen at {new Date(userData?.lastseen).toLocaleDateString() }</p> )
+        } */}
+        {/* {
+          userData?.lastSeen === Date.now() ?
+         ( <p>{userData?.lastSeen}</p>)
+          :
+         ( <p>{onlineStatus && onlineStatus}</p>)
+
+        } */}
+        {/* <p>{userData?.lastSeen}</p>
+        <p>{onlineStatus && onlineStatus}</p> */}
         </div>
       </div>
 
-      <div className="max-w-full w-full overflow-y-scroll  p-2">
+      <div className="max-w-full w-full overflow-y-scroll overflow-x-hidden p-2">
         {Object.entries(groupedMessages).map(([label, messages]) => (
           <div key={label} className="!space-y-2">
             <p className="text-center text-xs text-gray-500 mb-2">{label}</p>

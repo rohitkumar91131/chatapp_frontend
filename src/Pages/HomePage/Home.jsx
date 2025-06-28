@@ -3,7 +3,7 @@ import Users from "./Users";
 import { useEffect, useRef,  } from "react";
 import { useSocket } from "../../context/Socket/SocketContext";
 import { slide1ref, slide2ref, videoCallRef } from "../../ui/gsap";
-import VideoCall from "./Video";
+import VideoCall from "./VideoCall";
 
 export default function HomePage() {
   const socket = useSocket();

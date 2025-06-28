@@ -43,13 +43,14 @@ const VideoChat = () => {
         setStatus('Connected');
       });
 
-      socket.on('ice-candidate', async ({ candidate }) => {
+      socket.on("ice-candidate", async ({ candidate, from }) => {
         try {
-          await peerConnectionRef.current?.addIceCandidate(candidate);
+          await peerConnectionRef.current.addIceCandidate(candidate);
         } catch (err) {
-          console.error('ICE error:', err);
+          alert(err.message);
         }
       });
+      
     };
 
     init();
