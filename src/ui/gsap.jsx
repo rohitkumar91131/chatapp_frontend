@@ -86,4 +86,5 @@ export const reverseIncomingCallAnimation = () =>{
 }
 export const incomingCallRef = createRef();
 
-export const incomingCallNotificatioRef = createRef(false);
+export const incomingCallNotificatioRef = createRef();
+incomingCallNotificatioRef.current = false;

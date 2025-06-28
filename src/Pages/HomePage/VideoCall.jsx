@@ -58,8 +58,9 @@ export default function VideoCall() {
 
     socket.on("ice-candidate",async({candidate , from})=>{
       try{
-        await peerConnectionRef.current.addIceCandidate(candidate);
-      }
+        if (peerConnectionRef.current) {
+          await peerConnectionRef.current.addIceCandidate(candidate);
+        }      }
       catch(err){
         alert(err.message)
       }
@@ -69,7 +70,7 @@ export default function VideoCall() {
     socket.on("end-call",()=>{
       if(peerConnectionRef.current){
         peerConnectionRef.current.close();
-        peerConnection.current = null;
+        peerConnectionRef.current = null;
       }
 
       if(myStreamRef.current){
@@ -140,12 +141,12 @@ export default function VideoCall() {
       })
 
 
-    await createPeerConnection();
-    const offer = await peerConnectionRef.current.createOffer();
-    await peerConnectionRef.current.setLocalDescription(offer);
-    socket.emit("offer",{offer , to : remoteSocketIdRef.current});
-    setStatus("Calling");
-    console.log("Calling")
+    // await createPeerConnection();
+    // const offer = await peerConnectionRef.current.createOffer();
+    // await peerConnectionRef.current.setLocalDescription(offer);
+    // socket.emit("offer",{offer , to : remoteSocketIdRef.current});
+    // setStatus("Calling");
+    // console.log("Calling")
 
   }
 

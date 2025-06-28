@@ -20,16 +20,18 @@ const socket = io(import.meta.env.VITE_BACKEND_URL,{
 })
 
 export default function App(){
-   const [incomingCall , setIncomingCall] = useState(true);
+   const [incomingCall , setIncomingCall] = useState(false);
 
   
   useEffect(()=>{
-    if(incomingCallNotificatioRef.current && incomingCallRef.current){
+    if(incomingCall){
       IncomingCallAnimation(incomingCallRef.current);
     }
-
     
-  },[])
+    socket.on("incoming-call-notification",()=>{
+      setIncomingCall(true);
+    })
+  },[incomingCall])
 
 
 
