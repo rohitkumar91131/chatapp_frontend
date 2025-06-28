@@ -1,7 +1,13 @@
 import React from 'react'
 import { incomingCallRef, reverseIncomingCallAnimation } from '../../ui/gsap'
+import { useSocket } from '../../context/Socket/SocketContext';
 
 export default function CallNotification() {
+  const socket  = useSocket();
+  const handleCallAccept = ()=>{
+
+    reverseIncomingCallAnimation();
+  }
   return (
     <div
       ref={incomingCallRef}
@@ -14,7 +20,7 @@ export default function CallNotification() {
         <div className="flex justify-center space-x-8">
           <button 
                className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition"
-               onClick={reverseIncomingCallAnimation}
+               onClick={handleCallAccept}
           >
             <img src="accept-call.png" alt="Accept" className="h-8 w-8" />
           </button>
