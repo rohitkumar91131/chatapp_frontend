@@ -126,16 +126,18 @@ export default function VideoCall() {
     };
   }
   const startCall = async()=>{
-    if(!remoteSocketIdRef.current) 
-      socket.emit("incoming-call-notification",{
-           to : remoteSocketIdRef
-      })
-      {
+      if(!remoteSocketIdRef.current){
         alert("No peer available")
         return;
       }
-
-      console.log(myStreamRef.current)
+      if(!myStreamRef.current){
+        alert("Fail to stream your video")
+        return;
+      }
+      console.log("mystream  " + myStreamRef.current);
+      socket.emit("incoming-call-notification", {
+        to : remoteSocketIdRef.current
+      })
 
 
     await createPeerConnection();
