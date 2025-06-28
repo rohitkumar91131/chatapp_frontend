@@ -82,9 +82,7 @@ export default function VideoCall() {
       
     })
 
-    socket.on("incoming-call-notification",()=>{
-      incomingCallNotificatioRef.current = true;
-    })
+
 
 
     return () => {
@@ -93,7 +91,6 @@ export default function VideoCall() {
       socket.off("answer");
       socket.off("ice-candidate");
       socket.off("end-call")
-      socket.off("incoming-call-notification");
     };
     
 
@@ -136,18 +133,18 @@ export default function VideoCall() {
         return;
       }
       socket.emit("incoming-call-notification",{
-        to : remoteSocketIdRef
+        to : remoteSocketIdRef.current
      })
 
       console.log(myStreamRef.current)
 
 
-    await createPeerConnection();
-    const offer = await peerConnectionRef.current.createOffer();
-    await peerConnectionRef.current.setLocalDescription(offer);
-    socket.emit("offer",{offer , to : remoteSocketIdRef.current});
-    setStatus("Calling");
-    console.log("Calling")
+    // await createPeerConnection();
+    // const offer = await peerConnectionRef.current.createOffer();
+    // await peerConnectionRef.current.setLocalDescription(offer);
+    // socket.emit("offer",{offer , to : remoteSocketIdRef.current});
+    // setStatus("Calling");
+    // console.log("Calling")
 
   }
 

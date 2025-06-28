@@ -21,6 +21,7 @@ const socket = io(import.meta.env.VITE_BACKEND_URL,{
 
 export default function App(){
    const [incomingCall , setIncomingCall] = useState(false);
+   
 
   
   useEffect(()=>{
@@ -28,9 +29,14 @@ export default function App(){
       IncomingCallAnimation(incomingCallRef.current);
     }
     
+    
     socket.on("incoming-call-notification",()=>{
       setIncomingCall(true);
     })
+
+    return () => {
+      socket.off("incoming-call-notification");
+    };
   },[incomingCall])
 
 
