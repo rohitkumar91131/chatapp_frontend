@@ -139,12 +139,12 @@ export default function VideoCall() {
       console.log(myStreamRef.current)
 
 
-    // await createPeerConnection();
-    // const offer = await peerConnectionRef.current.createOffer();
-    // await peerConnectionRef.current.setLocalDescription(offer);
-    // socket.emit("offer",{offer , to : remoteSocketIdRef.current});
-    // setStatus("Calling");
-    // console.log("Calling")
+    await createPeerConnection();
+    const offer = await peerConnectionRef.current.createOffer();
+    await peerConnectionRef.current.setLocalDescription(offer);
+    socket.emit("offer",{offer , to : remoteSocketIdRef.current});
+    setStatus("Calling");
+    console.log("Calling")
 
   }
 
