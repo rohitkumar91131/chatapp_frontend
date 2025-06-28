@@ -58,9 +58,8 @@ export default function VideoCall() {
 
     socket.on("ice-candidate",async({candidate , from})=>{
       try{
-        if (peerConnectionRef.current) {
-          await peerConnectionRef.current.addIceCandidate(candidate);
-        }      }
+        await peerConnectionRef.current.addIceCandidate(candidate);
+      }
       catch(err){
         alert(err.message)
       }
@@ -70,7 +69,7 @@ export default function VideoCall() {
     socket.on("end-call",()=>{
       if(peerConnectionRef.current){
         peerConnectionRef.current.close();
-        peerConnectionRef.current = null;
+        peerConnection.current = null;
       }
 
       if(myStreamRef.current){
@@ -127,18 +126,20 @@ export default function VideoCall() {
     };
   }
   const startCall = async()=>{
-      if(!remoteSocketIdRef.current){
+    if(!remoteSocketIdRef.current) 
+      {
         alert("No peer available")
         return;
       }
-      if(!myStreamRef.current){
-        alert("Fail to stream your video")
+      if(!myVideoRef.current && !myStreamRef.current){
+        alert("Fail to attach your video ");
         return;
       }
-      console.log("mystream  " + myStreamRef.current);
-      socket.emit("incoming-call-notification", {
-        to : remoteSocketIdRef.current
-      })
+      socket.emit("incoming-call-notification",{
+        to : remoteSocketIdRef
+     })
+
+      console.log(myStreamRef.current)
 
 
     await createPeerConnection();
