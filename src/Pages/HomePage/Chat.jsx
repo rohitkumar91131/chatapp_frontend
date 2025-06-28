@@ -9,6 +9,7 @@ export default function Chat() {
   const [userData, setUserData] = useState();
   const [chatData, setChatData] = useState([]);
   const [message, setMessage] = useState({ msg: "", to: `${id}` });
+  const [onlineStatus , setOnlineStatus] = useState();
 
   function formatWhatsAppDate(dateStr) {
     const today = new Date();
@@ -46,6 +47,14 @@ export default function Chat() {
     if (!id) return;
 
     socket.emit("create-or-join-room",id);
+    socket.emit("check-user-online-status",id);
+    socket.on("offline-user", status=>{
+      setOnlineStatus(status)
+    });
+    socket.on("online-user", status=>{
+      setOnlineStatus(status)
+    })
+
 
 
     socket.emit("load-all-chats-of-a-specific-roomId", id);
@@ -68,6 +77,8 @@ export default function Chat() {
       socket.off("new-message");
       socket.off("user-specific-data-from-id-for-chat");
       socket.off("all-chat-of-a-specific-roomId-was-sended-from-server");
+      socket.off("online-user");
+      socket.off("offline-user");
     };
   }, [id]);
 
@@ -103,6 +114,7 @@ export default function Chat() {
            className="w-[40px] h-[40px] flex-end"
            onClick={handleVideocall}
         />
+        <p>{onlineStatus && onlineStatus}</p>
         </div>
       </div>
 

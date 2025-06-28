@@ -19,6 +19,8 @@ export default function HomePage() {
       alert(err.message);
     });
 
+    
+
     return () => {
       socket.disconnect();
     };
