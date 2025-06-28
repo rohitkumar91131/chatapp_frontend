@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSocket } from "../../context/Socket/SocketContext"
 import { useUser } from "../../context/User/UserContext";
-import { Slide1Animation, slide1ref, slide2ref } from "../../ui/gsap";
+import { IncomingCallAnimation, incomingCallRef, Slide1Animation, slide1ref, slide2ref } from "../../ui/gsap";
 
 
 export default function Users() {
@@ -27,7 +27,7 @@ export default function Users() {
         console.log(id);
 
 
-        Slide1Animation(slide1ref.current ,slide2ref.current)
+        Slide1Animation(slide1ref.current ,slide2ref.current);
 
 
         // on tapping on a user a room will be created

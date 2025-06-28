@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useSocket } from "../../context/Socket/SocketContext";
 import { useUser } from "../../context/User/UserContext";
+import { incomingCallNotificatioRef } from "../../ui/gsap";
 
 
 export default function VideoCall() {
@@ -81,6 +82,10 @@ export default function VideoCall() {
       
     })
 
+    socket.on("incoming-call-notification",()=>{
+      incomingCallNotificatioRef.current = true;
+    })
+
 
     return () => {
       socket.off("user-joined");
@@ -88,6 +93,7 @@ export default function VideoCall() {
       socket.off("answer");
       socket.off("ice-candidate");
       socket.off("end-call")
+      socket.off("incoming-call-notification");
     };
     
 
@@ -121,6 +127,9 @@ export default function VideoCall() {
   }
   const startCall = async()=>{
     if(!remoteSocketIdRef.current) 
+      socket.emit("incoming-call-notification",{
+           to : remoteSocketIdRef
+      })
       {
         alert("No peer available")
         return;
@@ -150,7 +159,7 @@ export default function VideoCall() {
     }
 
     socket.emit("end-call",{to : remoteSocketIdRef.current});
-    setStatus("Call Ended")
+    setStatus("Call")
   }
   return (
     <div className="grid grid-rows-[1fr_1fr_1fr] h-screen">

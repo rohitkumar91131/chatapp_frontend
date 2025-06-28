@@ -7,6 +7,7 @@ import { createRef } from 'react';
 const mm = gsap.matchMedia();
 let tl ;
 let tl2;
+let tl3;
 
 mm.add("(max-width:768px)",()=>{
   tl = gsap.timeline({
@@ -21,6 +22,7 @@ mm.add("(max-width:768px)",()=>{
   return ()=>{
     tl.kill();
     tl2.kill();
+    tl.kill();
     tl2 = null;
     tl = null;
   }
@@ -66,3 +68,22 @@ export const VideoCallAnimation = (element ,element2)=>{
 
 
 export const videoCallRef = createRef();
+
+tl3 = gsap.timeline({
+  paused : true
+})
+export const IncomingCallAnimation  = (element) =>{
+  tl3.clear();
+  tl3.to(element,{
+    top:0,
+    duration : 1
+  })
+  tl3.play();
+
+}
+export const reverseIncomingCallAnimation = () =>{
+  tl3.reverse();
+}
+export const incomingCallRef = createRef();
+
+export const incomingCallNotificatioRef = createRef(false);

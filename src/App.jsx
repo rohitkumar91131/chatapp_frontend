@@ -3,13 +3,15 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import Home from './components/Home'
 import { io } from "socket.io-client";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ProtectedRoute from './components/ProtectedRoute';
 import QR_CODE_LOGIN from './Pages/Login/QR_CODE_LOGIN';
 import QRScanComponent from './Pages/Login/QR_CODE_SCANNER';
 import HomePage from './Pages/HomePage/Home';
 import { SocketContext } from './context/Socket/SocketContext';
 import {  UserProvider } from './context/User/UserContext';
+import CallNotification from './Pages/HomePage/CallNotification';
+import { IncomingCallAnimation, incomingCallNotificatioRef, incomingCallRef } from './ui/gsap';
 
 
 const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -18,6 +20,20 @@ const socket = io(import.meta.env.VITE_BACKEND_URL,{
 })
 
 export default function App(){
+   const [incomingCall , setIncomingCall] = useState(true);
+
+  
+  useEffect(()=>{
+    if(incomingCallNotificatioRef.current && incomingCallRef.current){
+      IncomingCallAnimation(incomingCallRef.current);
+    }
+
+    
+  },[])
+
+
+
+
   // useEffect(() => {
   //   socket.on("connect", () => {
   //     console.log("Connected with socket id:", socket.id);
@@ -36,7 +52,9 @@ export default function App(){
     <SocketContext.Provider value={socket}>
           <UserProvider>
       <BrowserRouter>
+      <CallNotification/>
        <Routes>
+          
           <Route path='/' element={<HomePage/>} />
           <Route  path='/signup' element={<Signup/>}/>
           <Route  path='/login' element={<Login/>} />
