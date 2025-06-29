@@ -88,3 +88,20 @@ export const incomingCallRef = createRef();
 
 export const incomingCallNotificatioRef = createRef();
 incomingCallNotificatioRef.current = false;
+
+
+
+
+export const videoCallAfterTappingOnAcceptCall = createRef();
+
+let tl4 = gsap.timeline({
+  paused : true
+})
+export const bringVideoCallInScreen = (element)=>{
+  tl4.clear();
+  tl4.to(element,{
+    top:0,
+    duration : 1
+  });
+  tl4.play();
+}

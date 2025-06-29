@@ -5,6 +5,7 @@ import { useSocket } from "../../context/Socket/SocketContext";
 import { slide1ref, slide2ref, videoCallRef } from "../../ui/gsap";
 import VideoCall from "./VideoCall";
 import CallNotification from "./CallNotification";
+import VideoCall2 from "./VideoCall2";
 
 export default function HomePage() {
   const socket = useSocket();
@@ -45,7 +46,7 @@ export default function HomePage() {
              className="h-screen w-screen flex-shrink-0 md:h-full md:w-full z-index-3"   
              ref={videoCallRef}
         >  
-          <VideoCall/>
+          <VideoCall2/>
         </div>
       </div>
     );

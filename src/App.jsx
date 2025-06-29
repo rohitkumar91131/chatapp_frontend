@@ -11,7 +11,8 @@ import HomePage from './Pages/HomePage/Home';
 import { SocketContext } from './context/Socket/SocketContext';
 import {  UserProvider } from './context/User/UserContext';
 import CallNotification from './Pages/HomePage/CallNotification';
-import { IncomingCallAnimation, incomingCallNotificatioRef, incomingCallRef } from './ui/gsap';
+import { IncomingCallAnimation, incomingCallNotificatioRef, incomingCallRef, videoCallAfterTappingOnAcceptCall } from './ui/gsap';
+import VideoCall2 from './Pages/HomePage/VideoCall2';
 
 
 const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -61,6 +62,9 @@ export default function App(){
           <UserProvider>
       <BrowserRouter>
       <CallNotification/>
+      <div className='absolute top-[-100%]' ref={videoCallAfterTappingOnAcceptCall}>
+         <VideoCall2/>
+      </div>
        <Routes>
           
           <Route path='/' element={<HomePage/>} />
