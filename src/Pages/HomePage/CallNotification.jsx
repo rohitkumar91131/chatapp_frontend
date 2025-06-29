@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { bringVideoCallInScreen, incomingCallRef, reverseIncomingCallAnimation, videoCallAfterTappingOnAcceptCall } from '../../ui/gsap'
+import { bringVideoCallInScreen, incomingCallRef, reverseIncomingCallAnimation, UserPAgeAnaimationAfterVedioCall, videoCallAfterTappingOnAcceptCall } from '../../ui/gsap'
 import { useSocket } from '../../context/Socket/SocketContext';
 import { acceptCall, remoteSocketIdRef } from './Video-call-Ref';
 

@@ -2,7 +2,7 @@ import Chat from "./Chat";
 import Users from "./Users";
 import { useEffect, useRef,  } from "react";
 import { useSocket } from "../../context/Socket/SocketContext";
-import { slide1ref, slide2ref, videoCallRef } from "../../ui/gsap";
+import { slide1ref, slide2ref, UserPAgeAnaimationAfterVedioCall, videoCallAfterTappingOnAcceptCall, videoCallRef } from "../../ui/gsap";
 import VideoCall from "./VideoCall";
 import CallNotification from "./CallNotification";
 import VideoCall2 from "./VideoCall2";
@@ -32,7 +32,10 @@ export default function HomePage() {
       <div className="flex md:grid md:grid-cols-[1fr_1fr_1fr]   h-screen w-screen overflow-hidden">
         <div 
             className="border- block overflow-y-auto h-screen w-screen flex-shrink-0 md:w-full md:h-full"
-            ref={slide1ref}
+            ref={el=>{
+              slide1ref.current = el
+              UserPAgeAnaimationAfterVedioCall.current = el
+            }}
         >
           <Users />
         </div>
@@ -44,7 +47,10 @@ export default function HomePage() {
         </div>
         <div 
              className="h-screen w-screen flex-shrink-0 md:h-full md:w-full z-index-3"   
-             ref={videoCallRef}
+             ref={el=>{
+              videoCallRef.current = el,
+              videoCallAfterTappingOnAcceptCall.current = el
+             }}
         >  
           <VideoCall2/>
         </div>
