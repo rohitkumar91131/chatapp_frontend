@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { bringVideoCallInScreen, incomingCallRef, reverseIncomingCallAnimation, UserPAgeAnaimationAfterVedioCall, videoCallAfterTappingOnAcceptCall } from '../../ui/gsap'
 import { useSocket } from '../../context/Socket/SocketContext';
-import { acceptCall, remoteSocketIdRef } from './Video-call-Ref';
+import { acceptCall, CallStatusContext, remoteSocketIdRef } from './Video-call-Ref';
 
 export default function CallNotification() {
   const socket  = useSocket();
   const incomingOfferRef = useRef();
+  const {setCallStatus} = useContext(CallStatusContext);
 
   useEffect(()=>{
     socket.on("offer",({offer, from })=>{
@@ -20,9 +21,10 @@ export default function CallNotification() {
     }
   },[])
   const handleCallAccept = ()=>{
-    acceptCall(incomingOfferRef.current,remoteSocketIdRef.current,socket);
+    acceptCall(incomingOfferRef.current,remoteSocketIdRef.current,socket,setCallStatus);
     reverseIncomingCallAnimation();
     bringVideoCallInScreen(videoCallAfterTappingOnAcceptCall.current);
+    console.log()
   }
   return (
     <div

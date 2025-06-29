@@ -11,8 +11,9 @@ import HomePage from './Pages/HomePage/Home';
 import { SocketContext } from './context/Socket/SocketContext';
 import {  UserProvider } from './context/User/UserContext';
 import CallNotification from './Pages/HomePage/CallNotification';
-import { IncomingCallAnimation, incomingCallNotificatioRef, incomingCallRef, videoCallAfterTappingOnAcceptCall } from './ui/gsap';
+import { bringVideoCallInScreen, IncomingCallAnimation, incomingCallNotificatioRef, incomingCallRef, videoCallAfterTappingOnAcceptCall } from './ui/gsap';
 import VideoCall2 from './Pages/HomePage/VideoCall2';
+import { CallStatusProvider } from './Pages/HomePage/Video-call-Ref';
 
 
 const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -22,9 +23,8 @@ const socket = io(import.meta.env.VITE_BACKEND_URL,{
 
 export default function App(){
    const [incomingCall , setIncomingCall] = useState(false);
-   
 
-  
+   
   useEffect(()=>{
     if(incomingCall){
       IncomingCallAnimation(incomingCallRef.current);
@@ -33,7 +33,10 @@ export default function App(){
     
     socket.on("incoming-call-notification",()=>{
       setIncomingCall(true);
-    })
+    });
+
+
+    //bringVideoCallInScreen(videoCallAfterTappingOnAcceptCall.current);
 
     return () => {
       socket.off("incoming-call-notification");
@@ -59,6 +62,7 @@ export default function App(){
   // }, []);
   return (
     <SocketContext.Provider value={socket}>
+      <CallStatusProvider>
           <UserProvider>
       <BrowserRouter>
       <CallNotification/>
@@ -76,6 +80,7 @@ export default function App(){
        </Routes>
       </BrowserRouter>
       </UserProvider>
+      </CallStatusProvider>
     </SocketContext.Provider>  
 
   )

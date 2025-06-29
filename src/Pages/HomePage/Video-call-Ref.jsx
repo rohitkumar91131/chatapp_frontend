@@ -1,4 +1,4 @@
-import { createRef } from "react";
+import { createContext, createRef, useContext, useState } from "react";
 import { useSocket } from "../../context/Socket/SocketContext";
 
 export const remoteSocketIdRef = createRef();
@@ -32,7 +32,7 @@ export const createPeerConnection = (socket)=>{
         peerVideoRef.current.srcObject = event.streams[0];
     }
 }
-export const startCall =async(socket)=>{
+export const startCall =async(socket ,setCallStatus)=>{
     if(!myStreamRef.current){
         alert("Fail to stream your video")
         return ;
@@ -44,6 +44,7 @@ export const startCall =async(socket)=>{
     socket.emit("incoming-call-notification",{
         to : remoteSocketIdRef.current
     })
+    setCallStatus("Calling")
 
     await createPeerConnection(socket);
     const offer = await peerConnectionRef.current.createOffer();
@@ -52,10 +53,11 @@ export const startCall =async(socket)=>{
         offer : offer,
         to : remoteSocketIdRef.current
     });
-    console.log("Calling");
+    
 }
 
-export const acceptCall = async(offer, from,socket)=>{
+export const acceptCall = async(offer, from,socket , setCallStatus,)=>{
+    await getUserMedia();
     await createPeerConnection(socket);
     await peerConnectionRef.current.setRemoteDescription(offer);
     const answer = await peerConnectionRef.current.createAnswer();
@@ -64,5 +66,77 @@ export const acceptCall = async(offer, from,socket)=>{
         answer , 
         to : from
     })
-    console.log("Accepted")
+    console.log("Accepted");
+    
+    setCallStatus("Connected")
 }
+
+
+export const endCall = (socket , setCallStatus )=>{
+    if(peerConnectionRef.current){
+        peerConnectionRef.current.close();
+        peerConnectionRef.current = null;
+    }
+
+    if(myStreamRef.current){
+        myStreamRef.current.getTracks().forEach((track)=>{
+            track.stop();
+        })
+        myStreamRef.current = null;
+    }
+    if(myVideoRef.current){
+        myVideoRef.current.srcObject = null;
+    }
+
+    if(remoteSocketIdRef.current){
+        socket.emit("end-call",({
+            to : remoteSocketIdRef.current
+        }))
+    }
+
+    setCallStatus("Call");
+    
+    
+
+}
+
+
+
+export const getUserMedia = () =>{
+    return navigator.mediaDevices.getUserMedia({
+        audio : true,
+        video : true
+    }).
+    then((stream)=>{
+        if(myVideoRef.current){
+            myVideoRef.current.srcObject = stream;
+        }
+        myStreamRef.current = stream;
+        return true;
+    })
+    .catch(err=>{
+        alert("Permission denied to camera and audio");
+        return false;
+    })
+    
+}
+
+export const checkUserMedia = async()=>{
+    if(!myStreamRef.current && !myVideoRef.current.srcObject){
+       const granted = await  getUserMedia();
+       return granted;
+    }
+    return true
+}
+
+
+// making a context for call status
+export const CallStatusContext = createContext();
+export const CallStatusProvider = ({children}) =>{
+    const [callStatus , setCallStatus] = useState("Call");
+    
+    return <CallStatusContext.Provider value={{callStatus , setCallStatus }}>
+        {children}
+    </CallStatusContext.Provider>
+}
+

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/User/UserContext";
 import { useSocket } from "../../context/Socket/SocketContext";
-import { Slide2Animation, slide2ref, VideoCallAnimation, videoCallRef } from "../../ui/gsap";
+import { bringVideoCallInScreen, Slide2Animation, slide2ref, videoCallAfterTappingOnAcceptCall, VideoCallAnimation, videoCallRef } from "../../ui/gsap";
+import { myStreamRef, myVideoRef } from "./Video-call-Ref";
 
 export default function Chat() {
   const { id } = useUser();
@@ -96,10 +97,24 @@ export default function Chat() {
 
   const groupedMessages = groupMessagesByDate(chatData);
 
+  const getUserMedia = ()=>{
+    navigator.mediaDevices.getUserMedia({
+      audio : true,
+      video : true
+    }).then((stream)=>{
+      if(myVideoRef.current){
+        myVideoRef.current.srcObject = stream;
+      }
+      myStreamRef.current = stream;
+    })
+  }
+
 
   const handleVideocall = (id)=>{
     console.log("Refs:", videoCallRef.current, slide2ref.current);
-    VideoCallAnimation(videoCallRef.current, slide2ref.current);
+    //VideoCallAnimation(videoCallRef.current, slide2ref.current);
+    getUserMedia();
+    bringVideoCallInScreen(videoCallAfterTappingOnAcceptCall.current);
   }
 
   return (

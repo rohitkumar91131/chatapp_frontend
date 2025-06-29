@@ -29,7 +29,7 @@ export default function HomePage() {
   }, []);
 
     return (
-      <div className="flex md:grid md:grid-cols-[1fr_1fr_1fr]   h-screen w-screen overflow-hidden">
+      <div className="flex md:grid md:grid-cols-[1fr_1fr]   h-screen w-screen overflow-hidden">
         <div 
             className="border- block overflow-y-auto h-screen w-screen flex-shrink-0 md:w-full md:h-full"
             ref={el=>{
@@ -45,15 +45,15 @@ export default function HomePage() {
         >
           <Chat />
         </div>
-        <div 
-             className="h-screen w-screen flex-shrink-0 md:h-full md:w-full z-index-3"   
+        {/* <div 
+             className="h-screen w-screen flex-shrink-0 md:h-full md:w-full z-index-3 absolute right-[-100%]"   
              ref={el=>{
               videoCallRef.current = el,
               videoCallAfterTappingOnAcceptCall.current = el
              }}
         >  
           <VideoCall2/>
-        </div>
+        </div> */}
       </div>
     );
   }

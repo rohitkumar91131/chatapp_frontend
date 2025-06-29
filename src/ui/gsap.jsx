@@ -18,9 +18,7 @@ mm.add("(max-width:768px)",()=>{
     paused : true
   })
 
-tl4 = gsap.timeline({
-  paused : true
-})
+
 
 
 
@@ -28,10 +26,10 @@ tl4 = gsap.timeline({
     tl.kill();
     tl2.kill();
     tl.kill();
-    tl4.kill();
+    // tl4.kill();
     tl2 = null;
     tl = null;
-    tl4  = null;
+    // tl4  = null;
   }
 })
 // this is for right to left
@@ -101,12 +99,28 @@ incomingCallNotificatioRef.current = false;
 
 export const videoCallAfterTappingOnAcceptCall = createRef();
 export const UserPAgeAnaimationAfterVedioCall = createRef();
-
+tl4 = gsap.timeline({
+  paused : true
+})
 export const bringVideoCallInScreen = ( ele2)=>{
   tl4.clear();
 
   tl4.to(ele2,{
-    x:"-200%"
+    top:0,
+    duration :1
   })
   tl4.play();
+}
+
+
+let tl5= gsap.timeline({
+  paused : true
+})
+export const bringVideoCallOutOfScreen = (ele)=>{
+  tl5.clear();
+  tl5.to(ele,{
+    top:"-100%",
+    duration : 1
+  })
+  tl5.play();
 }
