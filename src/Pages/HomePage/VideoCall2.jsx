@@ -61,6 +61,10 @@ export default function VideoCall2() {
           
             // Optional: set call status, show UI, etc.
           });
+
+          socket.on("add-socket-id-to-remoteSocketIdRef",(data)=>{
+            remoteSocketIdRef.current = data;
+          })
           
 
           return ()=>{
@@ -68,6 +72,7 @@ export default function VideoCall2() {
             socket.off("answer");
             socket.off("user-joined");
             socket.off("end-call");
+            socket.off("add-socket-id-to-remoteSocketIdRef");
           }
           
 

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/User/UserContext";
 import { useSocket } from "../../context/Socket/SocketContext";
 import { bringVideoCallInScreen, Slide2Animation, slide2ref, videoCallAfterTappingOnAcceptCall, VideoCallAnimation, videoCallRef } from "../../ui/gsap";
-import { myStreamRef, myVideoRef } from "./Video-call-Ref";
+import { myStreamRef, myVideoRef, remoteSocketIdRef } from "./Video-call-Ref";
 
 export default function Chat() {
   const { id } = useUser();
