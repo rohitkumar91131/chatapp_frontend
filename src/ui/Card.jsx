@@ -65,7 +65,12 @@ export default function Login_Signup_Card({ formName, accountAlready }) {
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 space-y-6">
         <div className="flex flex-col items-center">
           <img src="logo.svg" alt="Logo" className="w-16 h-16 mb-2" />
-          <h1 className="text-2xl font-extrabold text-red-600">Vartalaap</h1>
+          <Link
+            to="/home"
+            className="text-4xl sm:text-5xl font-extrabold text-pink-600 tracking-wide hover:underline"
+          >
+            Vartalaap
+          </Link>
           <h2 className="text-xl font-semibold mt-4 text-gray-700">
             {formName} Form
           </h2>
