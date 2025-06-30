@@ -14,4 +14,11 @@ export default defineConfig({
   define: {
     global: {},
   },
+  theme: {
+    extend: {
+      animation: {
+        'bounce-slow': 'bounce 3s infinite',
+      },
+    },
+  },
 })

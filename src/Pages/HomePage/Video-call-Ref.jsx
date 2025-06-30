@@ -32,7 +32,7 @@ export const createPeerConnection = (socket)=>{
         peerVideoRef.current.srcObject = event.streams[0];
     }
 }
-export const startCall =async(socket ,setCallStatus)=>{
+export const startCall =async(socket ,setCallStatus ,)=>{
     if(!myStreamRef.current){
         alert("Fail to stream your video")
         return ;
@@ -54,9 +54,10 @@ export const startCall =async(socket ,setCallStatus)=>{
         to : remoteSocketIdRef.current
     });
     
+    
 }
 
-export const acceptCall = async(offer, from,socket , setCallStatus,)=>{
+export const acceptCall = async(offer, from,socket , setCallStatus,setIncomingCall)=>{
     await getUserMedia();
     await createPeerConnection(socket);
     await peerConnectionRef.current.setRemoteDescription(offer);
@@ -68,7 +69,8 @@ export const acceptCall = async(offer, from,socket , setCallStatus,)=>{
     })
     console.log("Accepted");
     
-    setCallStatus("Connected")
+    setCallStatus("Connected");
+    setIncomingCall(false);
 }
 
 
@@ -95,6 +97,7 @@ export const endCall = (socket , setCallStatus )=>{
     }
 
     setCallStatus("Call");
+    remoteSocketIdRef.current = null;
     
     
 
@@ -134,8 +137,9 @@ export const checkUserMedia = async()=>{
 export const CallStatusContext = createContext();
 export const CallStatusProvider = ({children}) =>{
     const [callStatus , setCallStatus] = useState("Call");
+    const [incomingCall , setIncomingCall] = useState(false);
     
-    return <CallStatusContext.Provider value={{callStatus , setCallStatus }}>
+    return <CallStatusContext.Provider value={{callStatus , setCallStatus , incomingCall , setIncomingCall }}>
         {children}
     </CallStatusContext.Provider>
 }

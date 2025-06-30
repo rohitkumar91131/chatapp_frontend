@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSocket } from "../../context/Socket/SocketContext"
 import { useUser } from "../../context/User/UserContext";
-import { IncomingCallAnimation, incomingCallRef, Slide1Animation, slide1ref, slide2ref } from "../../ui/gsap";
+import { IncomingCallAnimation, incomingCallRef, landingPageRef, Slide1Animation, slide1ref, slide2ref } from "../../ui/gsap";
 
 
 export default function Users() {
@@ -32,7 +32,22 @@ export default function Users() {
 
         // on tapping on a user a room will be created
     }
-   
+  //  if(!allUsers.length >0){
+  //   return (
+  //         <div className="h-screen w-full flex block md:hidden flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
+  //           <div >
+  //           <img
+  //             src="logo.svg"
+  //             alt="Vartalaap Logo"
+  //             className="w-24 h-24 mb-6 drop-shadow-lg animate-bounce-slow"
+  //           />
+  //           <h1 className="text-4xl font-semibold mb-2 tracking-wide">Welcome to Vaartalap</h1>
+  //           <p className="text-lg text-gray-600">Start chatting with your friends in real-time</p>
+  //           </div>
+  //         </div>
+  //       );
+  //  }
+    
   return (
     <div>
       {
@@ -47,7 +62,7 @@ export default function Users() {
             </p>
         ))
         :
-        (<p>Loading...</p>)
+        (<p className="h-screen w-full flex items-center justify-center text-2xl">Loading...</p>)
       }
     </div>
   )

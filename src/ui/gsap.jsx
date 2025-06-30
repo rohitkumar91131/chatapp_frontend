@@ -124,3 +124,19 @@ export const bringVideoCallOutOfScreen = (ele)=>{
   })
   tl5.play();
 }
+
+
+let tl6 = gsap.timeline({
+  paused : true
+})
+export const landingAnimation = (ele)=>{
+  tl6.clear();
+  tl6.from(ele,{
+    y:-200,
+    opacity: 0,
+    duration: 0.5
+  });
+  tl6.play();
+}
+
+export const landingPageRef = createRef();

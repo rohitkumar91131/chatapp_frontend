@@ -6,7 +6,7 @@ import { acceptCall, CallStatusContext, remoteSocketIdRef } from './Video-call-R
 export default function CallNotification() {
   const socket  = useSocket();
   const incomingOfferRef = useRef();
-  const {setCallStatus} = useContext(CallStatusContext);
+  const {setCallStatus ,setIncomingCall} = useContext(CallStatusContext);
 
   useEffect(()=>{
     socket.on("offer",({offer, from })=>{
@@ -24,7 +24,8 @@ export default function CallNotification() {
     acceptCall(incomingOfferRef.current,remoteSocketIdRef.current,socket,setCallStatus);
     reverseIncomingCallAnimation();
     bringVideoCallInScreen(videoCallAfterTappingOnAcceptCall.current);
-    console.log()
+    console.log();
+    setIncomingCall(false);
   }
   return (
     <div

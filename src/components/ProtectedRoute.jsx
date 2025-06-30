@@ -15,7 +15,7 @@ export default function ProtectedRoute ({children}){
                 let data = await res.json();
                 console.log(data)
                 if(data.success){
-                    navigate("/");
+                    
                 }
                 else{
                     toast(data.msg);

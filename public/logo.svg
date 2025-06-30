@@ -1,9 +1,7 @@
-<svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
   <circle cx="70" cy="70" r="70" fill="#4CAF50"/>
-  <g transform="translate(40, 40)">
-    <path d="M10 10C10 4.5 15 0 22 0H48C55 0 60 4.5 60 10V30C60 35.5 55 40 48 40H40L30 50V40H22C15 40 10 35.5 10 30V10Z" fill="white"/>
-    <circle cx="24" cy="22" r="3" fill="#4CAF50"/>
-    <circle cx="35" cy="22" r="3" fill="#4CAF50"/>
-    <circle cx="46" cy="22" r="3" fill="#4CAF50"/>
-  </g>
+  <path d="M45 50C45 47.7909 46.7909 46 49 46H91C93.2091 46 95 47.7909 95 50V74C95 76.2091 93.2091 78 91 78H59L50 86V78H49C46.7909 78 45 76.2091 45 74V50Z" fill="white"/>
+  <circle cx="58" cy="62" r="2.5" fill="#4CAF50"/>
+  <circle cx="70" cy="62" r="2.5" fill="#4CAF50"/>
+  <circle cx="82" cy="62" r="2.5" fill="#4CAF50"/>
 </svg>

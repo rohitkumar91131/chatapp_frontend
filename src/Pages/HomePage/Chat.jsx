@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/User/UserContext";
 import { useSocket } from "../../context/Socket/SocketContext";
-import { bringVideoCallInScreen, Slide2Animation, slide2ref, videoCallAfterTappingOnAcceptCall, VideoCallAnimation, videoCallRef } from "../../ui/gsap";
+import { bringVideoCallInScreen, landingPageRef, Slide2Animation, slide2ref, videoCallAfterTappingOnAcceptCall, VideoCallAnimation, videoCallRef } from "../../ui/gsap";
 import { myStreamRef, myVideoRef, remoteSocketIdRef } from "./Video-call-Ref";
 
 export default function Chat() {
   const { id } = useUser();
+  const latestMessageRef = useRef(null);
   const socket = useSocket();
   const [userData, setUserData] = useState();
   const [chatData, setChatData] = useState([]);
@@ -44,8 +45,13 @@ export default function Chat() {
     return groups;
   };
 
+  
+
   useEffect(() => {
     if (!id) return;
+    if(chatData && latestMessageRef.current){
+      latestMessageRef.current.scrollIntoView( { behavior : "smooth"})
+    }
 
     socket.emit("create-or-join-room",id);
     socket.emit("check-user-online-status",id);
@@ -61,6 +67,7 @@ export default function Chat() {
     socket.emit("load-all-chats-of-a-specific-roomId", id);
     socket.on("all-chat-of-a-specific-roomId-was-sended-from-server", (chatData) => {
       setChatData(chatData);
+
     });
 
     socket.emit("give-specific-user-data-from-id-for-chat", id);
@@ -72,6 +79,9 @@ export default function Chat() {
 
     socket.on("new-message", (data) => {
       setChatData((prev) => [...prev, data]);
+      if(latestMessageRef.current){
+        latestMessageRef.current.scrollIntoView({behavior : "smooth"});
+      }
     });
 
     return () => {
@@ -81,7 +91,7 @@ export default function Chat() {
       socket.off("online-user");
       socket.off("offline-user");
     };
-  }, [id]);
+  }, [id ]);
 
   const handleInputChange = (e) => {
     const { value } = e.target;
@@ -118,6 +128,23 @@ export default function Chat() {
     socket.emit("join-video-call",{
       peerSocketId : id
     })
+  }
+
+  if(!id){
+    return (
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
+        <div ref={landingPageRef}>
+        <img
+          src="logo.svg"
+          alt="Vaartalap Logo"
+          className="w-24 h-24 mb-6 drop-shadow-lg animate-bounce-slow"
+        />
+        <h1 className="text-4xl font-semibold mb-2 tracking-wide">Welcome to Vartalaap</h1>
+        <p className="text-lg text-gray-600">Start chatting with your friends in real-time</p>
+        </div>
+      </div>
+    );
+    
   }
 
   return (
@@ -180,6 +207,7 @@ export default function Chat() {
             ))}
           </div>
         ))}
+        <div ref={latestMessageRef}></div>
       </div>
 
       <form onSubmit={handleMessageSubmit} className="grid grid-cols-[8fr_2fr]">

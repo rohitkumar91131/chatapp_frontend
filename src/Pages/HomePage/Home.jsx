@@ -2,7 +2,7 @@ import Chat from "./Chat";
 import Users from "./Users";
 import { useEffect, useRef,  } from "react";
 import { useSocket } from "../../context/Socket/SocketContext";
-import { slide1ref, slide2ref, UserPAgeAnaimationAfterVedioCall, videoCallAfterTappingOnAcceptCall, videoCallRef } from "../../ui/gsap";
+import { landingAnimation, landingPageRef, slide1ref, slide2ref, UserPAgeAnaimationAfterVedioCall, videoCallAfterTappingOnAcceptCall, videoCallRef } from "../../ui/gsap";
 import VideoCall from "./VideoCall";
 import CallNotification from "./CallNotification";
 import VideoCall2 from "./VideoCall2";
@@ -11,6 +11,8 @@ export default function HomePage() {
   const socket = useSocket();
 
   useEffect(() => {
+
+    landingAnimation(landingPageRef.current)
     socket.connect();
 
     socket.on("connect", () => {
@@ -27,6 +29,8 @@ export default function HomePage() {
       socket.disconnect();
     };
   }, []);
+
+  
 
     return (
       <div className="flex md:grid md:grid-cols-[1fr_1fr]   h-screen w-screen overflow-hidden">

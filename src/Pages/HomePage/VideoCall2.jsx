@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CallStatusContext, checkUserMedia, endCall, myStreamRef, myVideoRef, peerConnectionRef, peerVideoRef, remoteSocketIdRef, startCall } from './Video-call-Ref'
 import { useSocket } from '../../context/Socket/SocketContext'
-import { bringVideoCallOutOfScreen, videoCallAfterTappingOnAcceptCall } from '../../ui/gsap';
+import { bringVideoCallOutOfScreen, IncomingCallAnimation, incomingCallRef, videoCallAfterTappingOnAcceptCall } from '../../ui/gsap';
 
 export default function VideoCall2() {
     const roomId = "room"
-    const {callStatus ,setCallStatus ,incomingCall ,} = useContext(CallStatusContext);
+    const {callStatus ,setCallStatus ,incomingCall ,setIncomingCall} = useContext(CallStatusContext);
 
     const socket = useSocket();
     useEffect(()=>{
@@ -22,6 +22,16 @@ export default function VideoCall2() {
         //   .catch((err)=>{
         //     console.log(err)
         //   })
+        socket.on("incoming-call-notification",()=>{
+          setIncomingCall(true);
+        });
+
+        if(incomingCall){
+              IncomingCallAnimation(incomingCallRef.current);
+        }
+            
+            
+      
 
 
           socket.emit("join-room",roomId);
@@ -58,7 +68,9 @@ export default function VideoCall2() {
             if (myVideoRef.current) {
               myVideoRef.current.srcObject = null;
             }
-          
+
+            setCallStatus("Call");    
+            remoteSocketIdRef.current = null;      
             // Optional: set call status, show UI, etc.
           });
 
@@ -73,11 +85,12 @@ export default function VideoCall2() {
             socket.off("user-joined");
             socket.off("end-call");
             socket.off("add-socket-id-to-remoteSocketIdRef");
+            socket.off("incoming-call-notification");
           }
           
 
 
-    },[])
+    },[incomingCall])
 
     const removeUserMedia = ()=>{
         if(myStreamRef.current){
@@ -95,7 +108,7 @@ export default function VideoCall2() {
     const handleStartCall = async()=>{
         const isGranted =await checkUserMedia();
         if(isGranted){
-            startCall(socket , setCallStatus)
+            startCall(socket , setCallStatus )
         }
         else{
             alert("Fail to do a video call")
@@ -108,7 +121,7 @@ export default function VideoCall2() {
     }
 
   return (
-<div className="h-screen w-screen flex flex-col bg-gradient-to-br from-purple-800 via-indigo-700 via-blue-600 to-sky-500 text-white relative overflow-hidden">
+<div className="h-screen w-screen flex flex-col bg-gradient-to-br  z-50 from-purple-800 via-indigo-700 via-blue-600 to-sky-500 text-white relative overflow-hidden">
   {/* Header with glassmorphism */}
   <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-white/10 backdrop-blur-md rounded-xl shadow-lg px-6 py-3 flex items-center gap-4 border border-white/20">
     <img

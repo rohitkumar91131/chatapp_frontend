@@ -22,26 +22,18 @@ const socket = io(import.meta.env.VITE_BACKEND_URL,{
 })
 
 export default function App(){
-   const [incomingCall , setIncomingCall] = useState(false);
+   
 
    
   useEffect(()=>{
-    if(incomingCall){
-      IncomingCallAnimation(incomingCallRef.current);
-    }
-    
-    
-    socket.on("incoming-call-notification",()=>{
-      setIncomingCall(true);
-    });
+ 
 
 
     //bringVideoCallInScreen(videoCallAfterTappingOnAcceptCall.current);
 
     return () => {
-      socket.off("incoming-call-notification");
     };
-  },[incomingCall])
+  },[])
 
 
 
@@ -71,12 +63,13 @@ export default function App(){
       </div>
        <Routes>
           
-          <Route path='/' element={<HomePage/>} />
-          <Route  path='/signup' element={<Signup/>}/>
-          <Route  path='/login' element={<Login/>} />
-          <Route path='/home' element={<Home/>} />
-          <Route path='/qr-login' element={<QR_CODE_LOGIN/>} />
-          <Route path="/qr-scan" element={<QRScanComponent/>} />
+       <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>} />
+       <Route path='/signup' element={<Signup/>}/>
+       <Route path='/login' element={<Login/>} />
+       <Route path='/home' element={<Home/>} />
+       <Route path='/qr-login' element={<QR_CODE_LOGIN/>} />
+       <Route path='/qr-scan' element={<ProtectedRoute><QRScanComponent/></ProtectedRoute>} />
+
        </Routes>
       </BrowserRouter>
       </UserProvider>
@@ -85,3 +78,5 @@ export default function App(){
 
   )
 }
+
+
