@@ -26,7 +26,7 @@ export default function VideoCall2() {
 
           socket.emit("join-room",roomId);
           socket.on("user-joined",(data)=>{
-            console.log(data);
+            console.log("Joining video call offer");
             remoteSocketIdRef.current = data;
       
           });

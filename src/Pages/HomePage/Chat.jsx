@@ -110,11 +110,14 @@ export default function Chat() {
   }
 
 
-  const handleVideocall = (id)=>{
+  const handleVideocall = ()=>{
     console.log("Refs:", videoCallRef.current, slide2ref.current);
     //VideoCallAnimation(videoCallRef.current, slide2ref.current);
     getUserMedia();
     bringVideoCallInScreen(videoCallAfterTappingOnAcceptCall.current);
+    socket.emit("join-video-call",{
+      peerSocketId : id
+    })
   }
 
   return (
