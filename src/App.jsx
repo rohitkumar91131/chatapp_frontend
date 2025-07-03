@@ -14,6 +14,7 @@ import CallNotification from './Pages/HomePage/CallNotification';
 import { bringVideoCallInScreen, IncomingCallAnimation, incomingCallNotificatioRef, incomingCallRef, videoCallAfterTappingOnAcceptCall } from './ui/gsap';
 import VideoCall2 from './Pages/HomePage/VideoCall2';
 import { CallStatusProvider } from './Pages/HomePage/Video-call-Ref';
+import { ToastContainer } from 'react-toastify';
 
 
 const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -55,6 +56,16 @@ export default function App(){
   return (
     <SocketContext.Provider value={socket}>
       <CallStatusProvider>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
           <UserProvider>
       <BrowserRouter>
       <CallNotification/>

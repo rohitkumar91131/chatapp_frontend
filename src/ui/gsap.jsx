@@ -141,3 +141,40 @@ export const landingAnimation = (ele)=>{
 }
 
 export const landingPageRef = createRef();
+
+
+let tl7 = gsap.timeline({
+  paused : true
+})
+export const OpenSetting = (ele) =>{
+  tl7.clear();
+  tl7.to(ele , {
+    duration : 0.2,
+    autoAlpha : 1,
+    
+  })
+  tl7.play();
+}
+export const CloseSetting =()=>{
+  tl7.reverse();
+}
+export const settingRef = createRef();
+
+
+let tl8 = gsap.timeline({
+  paused : true
+})
+export const OpenCreateGroupForm = (ele)=>{
+  tl8.clear();
+  tl8.to(ele,{
+    autoAlpha : 1,
+    duration : 0.2,
+
+  })
+  tl8.play();
+}
+
+export const CloseCreateForm = ()=>{
+  tl8.reverse();
+}
+export const CreateGroupFormRef = createRef(); 

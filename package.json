@@ -12,6 +12,7 @@
   "dependencies": {
     "gsap": "^3.13.0",
     "localtunnel": "^2.0.2",
+    "lucide-react": "^0.525.0",
     "peerjs": "^1.5.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
