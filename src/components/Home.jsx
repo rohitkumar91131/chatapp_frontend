@@ -35,7 +35,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-screen min-h-screen bg-gradient-to-tr from-pink-100 via-white to-pink-200 flex items-center justify-center p-4">
+    <div className="w-screen min-h-[100dvh] bg-gradient-to-tr from-pink-100 via-white to-pink-200 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-7 flex flex-col items-center gap-8 text-center">
         <div className="flex flex-col items-center gap-3">
           <img

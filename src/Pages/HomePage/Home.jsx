@@ -33,9 +33,9 @@ export default function HomePage() {
   
 
     return (
-      <div className="flex md:grid md:grid-cols-[1fr_1fr]   h-screen w-screen overflow-hidden">
+      <div className="flex md:grid md:grid-cols-[1fr_1fr]   h-[100dvh] w-screen overflow-hidden">
         <div 
-            className="border- block overflow-y-auto h-screen w-screen flex-shrink-0 md:w-full md:h-full"
+            className="border- block overflow-y-auto h-[100dvh] w-screen flex-shrink-0 md:w-full md:h-full"
             ref={el=>{
               slide1ref.current = el
               UserPAgeAnaimationAfterVedioCall.current = el
@@ -44,14 +44,13 @@ export default function HomePage() {
           <Users />
         </div>
         <div 
-            style={{ height: '100dvh' }}
-            className="overflow-y-hidden overflow-x-hidden  w-screen flex-shrink-0  md:w-full "
+            className="overflow-y-hidden overflow-x-hidden h-[100dvh] w-screen flex-shrink-0 md:h-full md:w-full "
             ref={slide2ref}
         >
           <Chat />
         </div>
         {/* <div 
-             className="h-screen w-screen flex-shrink-0 md:h-full md:w-full z-index-3 absolute right-[-100%]"   
+             className="h-[100dvh] w-screen flex-shrink-0 md:h-full md:w-full z-index-3 absolute right-[-100%]"   
              ref={el=>{
               videoCallRef.current = el,
               videoCallAfterTappingOnAcceptCall.current = el

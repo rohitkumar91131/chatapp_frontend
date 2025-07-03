@@ -139,7 +139,7 @@ export default function Chat() {
 
   if(!id){
     return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
+      <div className="h-[100dvh] w-full flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
         <div ref={landingPageRef}>
         <img
           src="logo.svg"
@@ -156,7 +156,7 @@ export default function Chat() {
 
 
   return (
-    <div className="w-full h-screen grid grid-rows-[1fr_9fr_1fr]">
+    <div className="w-full h-[100dvh] grid grid-rows-[1fr_9fr_1fr]">
       <div className="w-full h-[60px] flex gap-2 items-center  !ml-3">
         <img src="return.svg" className="block md:hidden" onClick={Slide2Animation} />
         <img src="https://i.ibb.co/zVvrpt7w/dpPhoto.webp" className="w-[50px] h-[50px] rounded-full" />

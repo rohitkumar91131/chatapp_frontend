@@ -35,7 +35,7 @@ export default function Users() {
     }
   //  if(!allUsers.length >0){
   //   return (
-  //         <div className=" w-full flex block md:hidden flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
+  //         <div className="h-[100dvh] w-full flex block md:hidden flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
   //           <div >
   //           <img
   //             src="logo.svg"
@@ -67,7 +67,7 @@ export default function Users() {
             </p>
         ))
         :
-        (<p className=" w-full flex items-center justify-center text-2xl">Loading...</p>)
+        (<p className="h-[100dvh] w-full flex items-center justify-center text-2xl">Loading...</p>)
       }
       </div>
     </div>
