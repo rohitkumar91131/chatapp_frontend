@@ -60,7 +60,7 @@ export default function Login_Signup_Card({ formName, accountAlready }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full min-h-screen flex items-center justify-center bg-gradient-to-tr from-red-100 to-red-200 p-6"
+      className="w-full min- flex items-center justify-center bg-gradient-to-tr from-red-100 to-red-200 p-6"
     >
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 space-y-6">
         <div className="flex flex-col items-center">

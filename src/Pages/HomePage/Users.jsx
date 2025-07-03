@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSocket } from "../../context/Socket/SocketContext"
 import { useUser } from "../../context/User/UserContext";
 import { IncomingCallAnimation, incomingCallRef, landingPageRef, Slide1Animation, slide1ref, slide2ref } from "../../ui/gsap";
+import Header from "../../ui/Header";
 
 
 export default function Users() {
@@ -34,7 +35,7 @@ export default function Users() {
     }
   //  if(!allUsers.length >0){
   //   return (
-  //         <div className="h-screen w-full flex block md:hidden flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
+  //         <div className=" w-full flex block md:hidden flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
   //           <div >
   //           <img
   //             src="logo.svg"
@@ -49,7 +50,11 @@ export default function Users() {
   //  }
     
   return (
-    <div>
+    <div className="w-full ">
+      <div>
+        <Header/>
+      </div>
+      <div>
       {
         allUsers.length > 0 ?
         allUsers.map((user,index)=>(
@@ -62,8 +67,9 @@ export default function Users() {
             </p>
         ))
         :
-        (<p className="h-screen w-full flex items-center justify-center text-2xl">Loading...</p>)
+        (<p className=" w-full flex items-center justify-center text-2xl">Loading...</p>)
       }
+      </div>
     </div>
   )
 }

@@ -32,7 +32,7 @@ export default function QRScannerPage() {
   }, [result]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-br from-white to-blue-50">
+    <div className="min- flex flex-col items-center justify-center px-4 bg-gradient-to-br from-white to-blue-50">
       <div className="flex items-center gap-2 mb-6">
         <img src="/logo.svg" alt="logo" className="w-10 h-10" />
         <h1 className="text-2xl sm:text-3xl font-bold text-blue-600">Vartalaap</h1>

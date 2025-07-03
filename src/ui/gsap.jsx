@@ -41,7 +41,8 @@ export const Slide1Animation = (element1 , element2) =>{
   },0.2);
   tl.to(element2,{
     x:"-100%",
-    duration : 0.2
+    duration : 0.2,
+    
   },0.2)
  tl.play();
 }

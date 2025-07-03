@@ -12,6 +12,7 @@ export default function Chat() {
   const [chatData, setChatData] = useState([]);
   const [message, setMessage] = useState({ msg: "", to: `${id}` });
   const [onlineStatus , setOnlineStatus] = useState();
+  const messageContainerRef = useRef(null);
 
   function formatWhatsAppDate(dateStr) {
     const today = new Date();
@@ -50,7 +51,7 @@ export default function Chat() {
   useEffect(() => {
     if (!id) return;
     if(chatData && latestMessageRef.current){
-      latestMessageRef.current.scrollIntoView( { behavior : "smooth"})
+      //latestMessageRef.current.scrollIntoView( { behavior : "smooth"})
     }
 
     socket.emit("create-or-join-room",id);
@@ -92,6 +93,12 @@ export default function Chat() {
       socket.off("offline-user");
     };
   }, [id ]);
+
+  useEffect(()=>{
+    if(messageContainerRef.current){
+      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+    }
+  },[chatData])
 
   const handleInputChange = (e) => {
     const { value } = e.target;
@@ -147,6 +154,7 @@ export default function Chat() {
     
   }
 
+
   return (
     <div className="w-full h-screen grid grid-rows-[1fr_9fr_1fr]">
       <div className="w-full h-[60px] flex gap-2 items-center  !ml-3">
@@ -185,7 +193,7 @@ export default function Chat() {
         </div>
       </div>
 
-      <div className="max-w-full w-full overflow-y-scroll overflow-x-hidden p-2">
+      <div className="max-w-full w-full flex flex-col overflow-y-scroll overflow-x-hidden p-2" ref={messageContainerRef}>
         {Object.entries(groupedMessages).map(([label, messages]) => (
           <div key={label} className="!space-y-2">
             <p className="text-center text-xs text-gray-500 mb-2">{label}</p>
@@ -215,6 +223,7 @@ export default function Chat() {
           className="border hover:outline-green-500"
           onChange={handleInputChange}
           value={message.msg}
+          placeholder = "💬 Type your message..."
         />
         <button className="border flex items-center justify-center p-1 bg-green-500">Send</button>
       </form>

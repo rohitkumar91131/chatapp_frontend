@@ -30,7 +30,8 @@ export default function CallNotification() {
   return (
     <div
       ref={incomingCallRef}
-      className="fixed inset-0 h-screen w-screen bg-opacity-50 flex items-center justify-center z-50 absolute top-[100%]"
+      style={{ height: '100dvh' }}
+      className="fixed inset-0  w-screen bg-opacity-50 flex items-center justify-center z-50 absolute top-[100%]"
     >
       <div className="bg-white rounded-2xl shadow-2xl p-8 flex flex-col items-center space-y-6 w-[90%] max-w-md text-center">
         <h2 className="text-2xl font-semibold text-gray-800">Incoming Call</h2>

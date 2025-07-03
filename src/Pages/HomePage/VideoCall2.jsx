@@ -121,7 +121,7 @@ export default function VideoCall2() {
     }
 
   return (
-<div className="h-screen w-screen flex flex-col bg-gradient-to-br  z-50 from-purple-800 via-indigo-700 via-blue-600 to-sky-500 text-white relative overflow-hidden">
+<div style={{ height: '100dvh' }} className=" w-screen flex flex-col bg-gradient-to-br  z-50 from-purple-800 via-indigo-700 via-blue-600 to-sky-500 text-white relative overflow-hidden">
   {/* Header with glassmorphism */}
   <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-white/10 backdrop-blur-md rounded-xl shadow-lg px-6 py-3 flex items-center gap-4 border border-white/20">
     <img

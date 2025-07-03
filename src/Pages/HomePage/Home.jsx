@@ -44,7 +44,8 @@ export default function HomePage() {
           <Users />
         </div>
         <div 
-            className="overflow-y-hidden overflow-x-hidden h-screen w-screen flex-shrink-0 md:h-full md:w-full "
+            style={{ height: '100dvh' }}
+            className="overflow-y-hidden overflow-x-hidden  w-screen flex-shrink-0  md:w-full "
             ref={slide2ref}
         >
           <Chat />

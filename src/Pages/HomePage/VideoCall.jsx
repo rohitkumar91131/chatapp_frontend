@@ -163,7 +163,7 @@ export default function VideoCall() {
     setStatus("Call")
   }
   return (
-    <div className="grid grid-rows-[1fr_1fr_1fr] h-screen">
+    <div className="grid grid-rows-[1fr_1fr_1fr] ">
       <div>
         <button 
             className="border !p-2 bg-red-500"
