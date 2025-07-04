@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/User/UserContext";
-import { useSocket } from "../../context/Socket/SocketContext";
 import { bringVideoCallInScreen, landingPageRef, Slide2Animation, slide2ref, videoCallAfterTappingOnAcceptCall, VideoCallAnimation, videoCallRef } from "../../ui/gsap";
 import { myStreamRef, myVideoRef, remoteSocketIdRef } from "./Video-call-Ref";
+import { useSocket } from "../../context/Socket/SocketContext";
 
 export default function Chat() {
   const { id } = useUser();

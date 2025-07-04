@@ -1,5 +1,4 @@
 import { createContext, createRef, useContext, useState } from "react";
-import { useSocket } from "../../context/Socket/SocketContext";
 
 export const remoteSocketIdRef = createRef();
 export const peerConnectionRef = createRef();

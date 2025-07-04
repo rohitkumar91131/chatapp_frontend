@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
-import { useSocket } from "../../context/Socket/SocketContext";
 import { useUser } from "../../context/User/UserContext";
 import { incomingCallNotificatioRef } from "../../ui/gsap";
+import { useSocket } from "../../context/Socket/SocketContext";
 
 
 export default function VideoCall() {

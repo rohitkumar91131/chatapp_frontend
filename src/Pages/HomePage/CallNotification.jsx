@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { bringVideoCallInScreen, incomingCallRef, reverseIncomingCallAnimation, UserPAgeAnaimationAfterVedioCall, videoCallAfterTappingOnAcceptCall } from '../../ui/gsap'
-import { useSocket } from '../../context/Socket/SocketContext';
 import { acceptCall, CallStatusContext, remoteSocketIdRef } from './Video-call-Ref';
+import { useSocket } from '../../context/Socket/SocketContext';
 
 export default function CallNotification() {
   const socket  = useSocket();

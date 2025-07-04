@@ -13,8 +13,9 @@ export default function HomePage() {
   useEffect(() => {
 
     landingAnimation(landingPageRef.current)
-    socket.connect();
-
+    if(!socket.connected){
+      socket.connect();
+    }
     socket.on("connect", () => {
       console.log("Connected with socket ID:", socket.id);
     });

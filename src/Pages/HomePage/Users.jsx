@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { useSocket } from "../../context/Socket/SocketContext"
 import { useUser } from "../../context/User/UserContext";
 import { IncomingCallAnimation, incomingCallRef, landingPageRef, Slide1Animation, slide1ref, slide2ref } from "../../ui/gsap";
 import Header from "../../ui/Header";
+import { useSocket } from "../../context/Socket/SocketContext";
 
 
 export default function Users() {

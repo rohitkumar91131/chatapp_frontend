@@ -1,0 +1,35 @@
+import { useEffect, useState } from "react";
+import { useSocket } from "../context/Socket/SocketContext";
+
+export default function Notification() {
+  const socket = useSocket();
+  const [notifications, setNotifications] = useState([]);
+
+  const handleNewNotification = (notification) => {
+    setNotifications((prev) => [notification, ...prev]);
+  };
+
+  useEffect(() => {
+    socket.on("new-notification", handleNewNotification);
+
+    return () => {
+      socket.off("new-notification", handleNewNotification);
+    };
+  }, [socket]);
+
+  return (
+    <div className="h-[70dvh] w-[70vw] md:w-[30vw] rounded-md flex flex-col items-center border p-4 bg-white">
+        <p className="text-2xl font-md ">Notifications</p>
+        
+      {notifications.length > 0 ? (
+        notifications.map((notification, index) => (
+          <p key={index} className="">
+            {notification.msg}
+          </p>
+        ))
+      ) : (
+        <p className="flex items-center justify-center w-full h-full">No notifications</p>
+      )}
+    </div>
+  );
+}

@@ -8,31 +8,35 @@ import ProtectedRoute from './components/ProtectedRoute';
 import QR_CODE_LOGIN from './Pages/Login/QR_CODE_LOGIN';
 import QRScanComponent from './Pages/Login/QR_CODE_SCANNER';
 import HomePage from './Pages/HomePage/Home';
-import { SocketContext } from './context/Socket/SocketContext';
+import {  SocketContextProvider } from './context/Socket/SocketContext';
 import {  UserProvider } from './context/User/UserContext';
 import CallNotification from './Pages/HomePage/CallNotification';
 import { bringVideoCallInScreen, IncomingCallAnimation, incomingCallNotificatioRef, incomingCallRef, videoCallAfterTappingOnAcceptCall } from './ui/gsap';
 import VideoCall2 from './Pages/HomePage/VideoCall2';
 import { CallStatusProvider } from './Pages/HomePage/Video-call-Ref';
 import { ToastContainer } from 'react-toastify';
+import SearchUser from './Pages/explore/SearchUser';
+import socket from './context/Socket/socket';
 
 
-const socket = io(import.meta.env.VITE_BACKEND_URL,{
-  withCredentials : true,
-  autoConnect : false
-})
+// const socket = io(import.meta.env.VITE_BACKEND_URL,{
+//   withCredentials : true,
+//   autoConnect : false
+// })
 
 export default function App(){
    
 
    
   useEffect(()=>{
- 
-
+    if(!socket.connected){
+      socket.connect();
+    }
 
     //bringVideoCallInScreen(videoCallAfterTappingOnAcceptCall.current);
 
     return () => {
+      socket.disconnect();
     };
   },[])
 
@@ -54,7 +58,7 @@ export default function App(){
   //   };
   // }, []);
   return (
-    <SocketContext.Provider value={socket}>
+    <SocketContextProvider>
       <CallStatusProvider>
       <ToastContainer 
         position="top-right"
@@ -80,12 +84,13 @@ export default function App(){
        <Route path='/home' element={<Home/>} />
        <Route path='/qr-login' element={<QR_CODE_LOGIN/>} />
        <Route path='/qr-scan' element={<ProtectedRoute><QRScanComponent/></ProtectedRoute>} />
+       <Route path="/search" element={<SearchUser/>} />
 
        </Routes>
       </BrowserRouter>
       </UserProvider>
       </CallStatusProvider>
-    </SocketContext.Provider>  
+    </SocketContextProvider>  
 
   )
 }

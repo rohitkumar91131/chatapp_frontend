@@ -178,3 +178,19 @@ export const CloseCreateForm = ()=>{
   tl8.reverse();
 }
 export const CreateGroupFormRef = createRef(); 
+
+let tl9 = gsap.timeline({
+  paused : true
+})
+export const OpenNotification = (ele)=>{
+  tl9.clear();
+  tl9.to(ele,{
+    autoAlpha : 1,
+    duration : 0.2
+  })
+  tl9.play();
+}
+export const CloseNotification = ()=>{
+  tl9.reverse();
+}
+export const NotificationRef = createRef();

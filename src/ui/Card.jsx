@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useSocket } from "../context/Socket/SocketContext";
 
 export default function Login_Signup_Card({ formName, accountAlready }) {
+  const socket = useSocket();
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [passwordSame, setPasswordSame] = useState(true);
@@ -30,7 +32,10 @@ export default function Login_Signup_Card({ formName, accountAlready }) {
       );
       let data = await res.json();
       toast(data.msg);
-      if (formName === "login" && data.success) navigate("/");
+      if (formName === "login" && data.success) {
+        socket.connect();
+        navigate("/");
+      }
       if (formName === "signup" && data.success) navigate("/login");
     } catch (err) {
       toast(err.message);

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CallStatusContext, checkUserMedia, endCall, myStreamRef, myVideoRef, peerConnectionRef, peerVideoRef, remoteSocketIdRef, startCall } from './Video-call-Ref'
-import { useSocket } from '../../context/Socket/SocketContext'
 import { bringVideoCallOutOfScreen, IncomingCallAnimation, incomingCallRef, videoCallAfterTappingOnAcceptCall } from '../../ui/gsap';
+import { useSocket } from '../../context/Socket/SocketContext';
 
 export default function VideoCall2() {
     const roomId = "room"
