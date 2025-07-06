@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/Socket/SocketContext";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function SearchUser() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const socket = useSocket();
 
+  // useEffect(()=>{
+  //   if(!socket.connected){
+  //     socket.connect();
+  //   }
+  // },[])
   useEffect(() => {
-    if(!socket.connected){
-      socket.connect();
-    }
     const fetchUsers = async () => {
       if (!search.trim()) {
         setUsers([]);
@@ -24,6 +27,7 @@ export default function SearchUser() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ search }),
+          credentials : "include"
         });
 
         const data = await res.json();
@@ -53,19 +57,19 @@ export default function SearchUser() {
         if (socket && socket.connected) {
           socket.emit("send-friend-request", userId, (res) => {
             if (res.success) {
-              alert("Friend request sent successfully");
+              toast("Friend request sent successfully");
             } else {
-              alert("Failed to send friend request");
+              toast(res.msg);
             }
           });
         } else {
           alert("Socket not connected.");
         }
       } else {
-        alert(data.msg || "You must be logged in to send a friend request.");
+        toast(data.msg || "You must be logged in to send a friend request.");
       }
     } catch (err) {
-      alert("An error occurred while sending the friend request.");
+      toast("An error occurred while sending the friend request.");
     }
   };
 
@@ -105,12 +109,26 @@ export default function SearchUser() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => handleAddFriend(user._id)}
-                  className="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-5 py-2 rounded-xl shadow transition-all duration-200"
-                >
-                  Add Friend
-                </button>
+                {
+                  !user.isSelf && !user.isFriend && !user.hasSentRequest && (
+                    <button
+                       className="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-5 py-2 rounded-xl shadow transition-all duration-200"
+                       onClick={() => handleAddFriend(user._id)}
+                    >
+                      Add Friend
+                    </button>
+                  )
+                }
+                {
+                  user.isFriend && (
+                    <div className="text-green-600 font-semibold text-sm">Already a friend</div>
+                  )
+                }
+                {
+                  user.hasSentRequest && (
+                    <div className="text-yellow-600 font-semibold text-sm">Request sent</div>
+                  )
+                }
               </div>
             ))}
           </div>

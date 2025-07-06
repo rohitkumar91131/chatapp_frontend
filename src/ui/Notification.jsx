@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "../context/Socket/SocketContext";
+import { useNotification } from "../context/notification/Notification";
 
 export default function Notification() {
   const socket = useSocket();
   const [notifications, setNotifications] = useState([]);
+  const {setNotification} = useNotification();
 
   const handleNewNotification = (notification) => {
     setNotifications((prev) => [notification, ...prev]);
-    console.log(notification)
+    console.log(notification);
+    setNotification("HomePage",true)
   };
   const handleNotification = (id)=>{
     console.log(id)
     socket.emit("accept-friend-request",id,(res)=>{
       res.msg
       console.log(res)
-    })
+    });
+
   }
 
   useEffect(() => {

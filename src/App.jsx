@@ -21,6 +21,7 @@ import ProfilePage from './ui/Profile';
 import { Sidebar } from 'lucide-react';
 import LayOut from './ui/LayOut';
 import { TabContextProvider } from './context/tab/TabContext';
+import { NotificationContextProvider } from './context/notification/Notification';
 
 
 // const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -63,6 +64,7 @@ export default function App(){
   }, []);
   return (
     <SocketContextProvider>
+      <NotificationContextProvider>
       <TabContextProvider>
       <CallStatusProvider>
       <ToastContainer 
@@ -97,6 +99,7 @@ export default function App(){
       </UserProvider>
       </CallStatusProvider>
       </TabContextProvider>
+      </NotificationContextProvider>
     </SocketContextProvider>  
 
   )
