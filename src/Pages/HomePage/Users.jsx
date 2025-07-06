@@ -3,6 +3,7 @@ import { useUser } from "../../context/User/UserContext";
 import { IncomingCallAnimation, incomingCallRef, landingPageRef, Slide1Animation, slide1ref, slide2ref } from "../../ui/gsap";
 import Header from "../../ui/Header";
 import { useSocket } from "../../context/Socket/SocketContext";
+import { Link } from "react-router-dom";
 
 
 export default function Users() {
@@ -11,15 +12,21 @@ export default function Users() {
     const {id ,setId} = useUser();
     const [allUsers , setAllUSers] = useState([]);
 
-    useEffect(()=>{
-        socket.on("load-users",(data)=>{
-           setAllUSers(data);
-        });
-
-        return ()=>{
-          socket.off("load-users");
+    useEffect(() => {
+      socket.emit("get-friends");
+    
+      socket.on("load-users", (data) => {
+        if (data?.friends) {
+          setAllUSers(data.friends);
+          console.log("Friends:", data.friends);
         }
-    },[]);
+      });
+    
+      return () => {
+        socket.off("load-users");
+      };
+    }, []);
+    
 
     const handleUserClick = (id)=>{
         userRef.current = id;
@@ -56,7 +63,7 @@ export default function Users() {
       </div>
       <div>
       {
-        allUsers.length > 0 ?
+        Array.isArray(allUsers) &&  allUsers.length > 0 ?
         allUsers.map((user,index)=>(
             <p 
                 key={index} 
@@ -67,7 +74,7 @@ export default function Users() {
             </p>
         ))
         :
-        (<p className="h-[100dvh] w-full flex items-center justify-center text-2xl">Loading...</p>)
+        (<Link to="/search" className="h-[100dvh] w-full flex items-center justify-center text-2xl">Add friend to start chatting</Link>)
       }
       </div>
     </div>

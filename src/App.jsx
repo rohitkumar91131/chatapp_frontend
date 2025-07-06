@@ -17,6 +17,10 @@ import { CallStatusProvider } from './Pages/HomePage/Video-call-Ref';
 import { ToastContainer } from 'react-toastify';
 import SearchUser from './Pages/explore/SearchUser';
 import socket from './context/Socket/socket';
+import ProfilePage from './ui/Profile';
+import { Sidebar } from 'lucide-react';
+import LayOut from './ui/LayOut';
+import { TabContextProvider } from './context/tab/TabContext';
 
 
 // const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -43,22 +47,23 @@ export default function App(){
 
 
 
-  // useEffect(() => {
-  //   socket.on("connect", () => {
-  //     console.log("Connected with socket id:", socket.id);
-  //   });
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected with socket id:", socket.id);
+    });
   
-  //   socket.on("receive-message", (data) => {
-  //     console.log("Received message:", data);
-  //   });
+    socket.on("receive-message", (data) => {
+      console.log("Received message:", data);
+    });
   
-  //   return () => {
-  //     socket.off("connect");
-  //     socket.off("receive-message");
-  //   };
-  // }, []);
+    return () => {
+      socket.off("connect");
+      socket.off("receive-message");
+    };
+  }, []);
   return (
     <SocketContextProvider>
+      <TabContextProvider>
       <CallStatusProvider>
       <ToastContainer 
         position="top-right"
@@ -77,19 +82,21 @@ export default function App(){
          <VideoCall2/>
       </div>
        <Routes>
-          
-       <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>} />
+        <Route path='/' element={<LayOut/>} />  
+       {/* <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>} /> */}
        <Route path='/signup' element={<Signup/>}/>
        <Route path='/login' element={<Login/>} />
        <Route path='/home' element={<Home/>} />
        <Route path='/qr-login' element={<QR_CODE_LOGIN/>} />
        <Route path='/qr-scan' element={<ProtectedRoute><QRScanComponent/></ProtectedRoute>} />
        <Route path="/search" element={<SearchUser/>} />
+       <Route path='/:username' element={<ProfilePage/>} />
 
        </Routes>
       </BrowserRouter>
       </UserProvider>
       </CallStatusProvider>
+      </TabContextProvider>
     </SocketContextProvider>  
 
   )

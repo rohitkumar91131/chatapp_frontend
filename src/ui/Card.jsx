@@ -4,13 +4,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { useSocket } from "../context/Socket/SocketContext";
 
 export default function Login_Signup_Card({ formName, accountAlready }) {
-  const socket = useSocket();
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [passwordSame, setPasswordSame] = useState(true);
+  const socket = useSocket();
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -99,14 +99,14 @@ export default function Login_Signup_Card({ formName, accountAlready }) {
         )}
 
         <div className="flex flex-col">
-          <label htmlFor="email" className="text-sm font-semibold">
-            Email
+          <label htmlFor="username" className="text-sm font-semibold">
+            username
           </label>
           <input
-            id="email"
+            id="username"
             required
-            name="email"
-            value={formData.email}
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             className="mt-1 border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
           />

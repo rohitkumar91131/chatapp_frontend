@@ -34,9 +34,9 @@ export default function HomePage() {
   
 
     return (
-      <div className="flex md:grid md:grid-cols-[1fr_1fr]   h-[100dvh] w-screen overflow-hidden">
+      <div className="flex md:grid md:grid-cols-[1fr_1fr]   h-full w-full overflow-hidden">
         <div 
-            className="border- block overflow-y-auto h-[100dvh] w-screen flex-shrink-0 md:w-full md:h-full"
+            className="border- block overflow-y-auto h-[90dvh] w-screen flex-shrink-0 md:w-full md:h-full"
             ref={el=>{
               slide1ref.current = el
               UserPAgeAnaimationAfterVedioCall.current = el
@@ -45,7 +45,7 @@ export default function HomePage() {
           <Users />
         </div>
         <div 
-            className="overflow-y-hidden overflow-x-hidden h-[100dvh] w-screen flex-shrink-0 md:h-full md:w-full "
+            className="overflow-y-hidden overflow-x-hidden h-[90dvh] w-screen flex-shrink-0 md:h-full md:w-full "
             ref={slide2ref}
         >
           <Chat />

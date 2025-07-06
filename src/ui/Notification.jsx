@@ -7,7 +7,15 @@ export default function Notification() {
 
   const handleNewNotification = (notification) => {
     setNotifications((prev) => [notification, ...prev]);
+    console.log(notification)
   };
+  const handleNotification = (id)=>{
+    console.log(id)
+    socket.emit("accept-friend-request",id,(res)=>{
+      res.msg
+      console.log(res)
+    })
+  }
 
   useEffect(() => {
     socket.on("new-notification", handleNewNotification);
@@ -23,9 +31,9 @@ export default function Notification() {
         
       {notifications.length > 0 ? (
         notifications.map((notification, index) => (
-          <p key={index} className="">
+          <button key={index} className="w-full text-2xl !p-2 border rounded-md" onClick={()=>handleNotification(notification.from)}>
             {notification.msg}
-          </p>
+          </button>
         ))
       ) : (
         <p className="flex items-center justify-center w-full h-full">No notifications</p>
