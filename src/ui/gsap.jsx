@@ -1,7 +1,7 @@
 // this file is used for the animation by gsap
 
 import gsap from 'gsap'
-import { createRef } from 'react';
+import { createRef, useState } from 'react';
 
 
 const mm = gsap.matchMedia();
@@ -194,3 +194,42 @@ export const CloseNotification = ()=>{
   tl9.reverse();
 }
 export const NotificationRef = createRef();
+
+
+
+// now animation for status feature
+let tl10 = gsap.timeline({
+  paused : true
+})
+export const openTextStatusForm = (ele)=>{
+  tl10.clear();
+  tl10.to(ele,{
+    autoAlpha : 1,
+    duration : 0.2
+  })
+  tl10.play();
+}
+
+export const CloseTextStatusForm = ()=>{
+  tl10.reverse()
+}
+export const TextStatusFormRef = createRef();
+
+
+//this is to show status shower
+let tl11 = gsap.timeline({
+  paused : true
+})
+export const showStatusShower = (ele)=>{
+  tl11.clear();
+  tl11.to(ele,{
+    autoAlpha : 1,
+    duration : 0.2
+  })
+  tl11.play();
+}
+export const statusShowerRef = createRef();
+
+export const closeStatusShower = ()=>{
+  tl11.reverse();
+}
