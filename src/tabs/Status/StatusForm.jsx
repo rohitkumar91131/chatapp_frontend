@@ -36,7 +36,7 @@ function StatusForm() {
           ← Return
         </button>
   
-        <input
+        <textarea
           type="text"
           placeholder="What's on your mind?"
           value={statusMessage}

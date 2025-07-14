@@ -7,28 +7,72 @@ import { showStatusShower, statusShowerRef } from "../../ui/gsap";
 
 function Status() {
   const [myStatus, setMyStatus] = useState([]);
+  const [myDetails , setMyDetails ]= useState(""); 
 
   const [friendStatus, setFriendStatus] = useState([]);
   const {setStatus} = useStatus();
   const socket = useSocket();
+  // useEffect(()=>{
+  //   socket.emit("get-all-my-status",{},(response)=>{
+  //     if(response.success){
+  //       //alert(response.msg);
+  //       setStatus(response.allStatus);
+  //     }
+  //     else{
+  //       alert(response.msg);
+  //     }
+  //   })
+
+
+  //   return ()=>{
+  //     socket.off("get-all-my-status")
+  //   }
+  // },[])
+
   useEffect(()=>{
-    socket.emit("get-all-my-status",{},(response)=>{
+    socket.emit("get-my-details-for-status",{},(response)=>{
+      //console.log(response);
+      setMyDetails(response?.user);
+    })
+    socket.emit("get-friend-status-overview",{},(response)=>{
+      //console.log(response?.friends)
       if(response.success){
-        //alert(response.msg);
-        setStatus(response.allStatus);
-      }
-      else{
-        alert(response.msg);
+        if(response.msg === "No status of friends"){
+          setFriendStatus({
+            msg : "No status updates from your friends yet."
+          })
+          return;
+        }
+        setFriendStatus(response?.friends)
       }
     })
-
-
-    return ()=>{
-      socket.off("get-all-my-status")
-    }
   },[])
   const handleMyStatusClick = ()=>{
-    showStatusShower(statusShowerRef.current)
+    socket.emit("get-all-my-status",{},(response)=>{
+      console.log(response.allStatus)
+      if(response.success){
+        setStatus(response.allStatus);
+        showStatusShower(statusShowerRef.current);
+      }
+      else{
+        alert(response.msg)
+      }
+    })
+    
+  }
+  const handleFriendStatus = (id) =>{
+    //alert(id)
+    socket.emit("get-all-status-of-a-friend-from-user-id",id,(response)=>{
+      console.log(response);
+      if(!response.success){
+        //alert(response.msg)
+        return;
+      }
+      setStatus(response.allStatus)
+      showStatusShower(statusShowerRef.current);
+
+    });
+
   }
 
   return (
@@ -37,11 +81,11 @@ function Status() {
       <div>
         <StatusHeader/>
       </div>
-      <div className="flex items-center px-4 py-4 border-b hover:bg-gray-100 transition"
+      <div className="flex items-center !p-4 border-b hover:bg-gray-100 transition"
            onClick={ handleMyStatusClick}
       >
         <img
-          src={myStatus.imgSrcLink}
+          src={myDetails?.profilePhoto}
           className="w-14 h-14 rounded-full border-2 border-gray-400"
         />
         <div className="ml-4">
@@ -52,27 +96,26 @@ function Status() {
       </div>
 
       <div>
-        <h4 className="text-sm text-gray-500 px-4 pt-4 pb-2 uppercase tracking-wide">
-          Recent updates
-        </h4>
-        {
-          friendStatus.length > 0 ? (
-            friendStatus.map((fStatus, index) => (
-              <div key={index} className="flex items-center px-4 py-3 hover:bg-gray-50 transition border-b">
-                <img
-                  src={fStatus.imgSrcLink}
-                  className="w-14 h-14 rounded-full border-2 border-green-500"
-                />
-                <div className="ml-4">
-                  <p className="font-medium text-gray-800">{fStatus.name}</p>
-                  <p className="text-sm text-gray-500">{fStatus.creationTime}</p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500 py-6">No friend status updates yet</p>
-          )
-        }
+        <h1 className="!px-4 !py-1 font-bold">Recent Status</h1>
+        <div>
+          {
+            friendStatus.length > 0 ?
+            (
+              friendStatus.map((status ,index)=>(
+                <div key={index} className="flex w-full items-center gap-3 !p-4" onClick={()=>handleFriendStatus(status?.user?._id)} >
+                  <img src={status?.user?.profilePhoto} className="h-14 w-14 rounded-full"/>
+                  <div>
+                    <p>{status.user.name}</p>
+                    <p>{new Date(status.createdAt).toLocaleString()}</p>
+                  </div>  
+                  
+                </div>  
+              ))
+            )
+            :
+            "No status updates from your friends yet."
+          }
+        </div>
       </div>
       <div className="invisible opacity-0  fixed inset-0  " ref={statusShowerRef}>
         <StatusShower/>

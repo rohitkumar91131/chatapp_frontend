@@ -233,3 +233,21 @@ export const statusShowerRef = createRef();
 export const closeStatusShower = ()=>{
   tl11.reverse();
 }
+
+//this is to show settingsof  statusshower
+let tl12 = gsap.timeline({
+  paused : true
+})
+export const showStatusShowerSetting = (ele)=>{
+  tl12.clear();
+  tl12.to(ele,{
+    autoAlpha : 1,
+    duration : 0.2
+  })
+  tl12.play();
+}
+export const statusShowerSettinfRef = createRef();
+
+export const closeStatusShowerSetting = ()=>{
+  tl12.reverse();
+}
