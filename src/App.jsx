@@ -23,6 +23,7 @@ import LayOut from './ui/LayOut';
 import { TabContextProvider } from './context/tab/TabContext';
 import { NotificationContextProvider } from './context/notification/Notification';
 import { StatusProvider } from './tabs/Status/StatusContext';
+import { GroupProvider } from './tabs/Group/context/GroupContext';
 
 
 // const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -65,6 +66,7 @@ export default function App(){
   }, []);
   return (
     <SocketContextProvider>
+      <GroupProvider>
       <StatusProvider>
       <NotificationContextProvider>
       <TabContextProvider>
@@ -103,6 +105,7 @@ export default function App(){
       </TabContextProvider>
       </NotificationContextProvider>
       </StatusProvider>
+      </GroupProvider>
     </SocketContextProvider>  
 
   )

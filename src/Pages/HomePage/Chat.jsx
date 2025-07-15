@@ -156,7 +156,7 @@ export default function Chat() {
 
 
   return (
-    <div className="w-full h-[100dvh] grid grid-rows-[1fr_9fr_1fr]">
+    <div className="w-full h-[90dvh] md:h-[100dvh] grid grid-rows-[1fr_9fr_1fr]">
       <div className="w-full h-[60px] flex gap-2 items-center  !ml-3">
         <img src="return.svg" className="block md:hidden" onClick={Slide2Animation} />
         <img src="https://i.ibb.co/zVvrpt7w/dpPhoto.webp" className="w-[50px] h-[50px] rounded-full" />
@@ -202,8 +202,8 @@ export default function Chat() {
                 key={index}
                 className={`flex ${id !== value.receiverID.toString() ? "justify-start" : "justify-end"}`}
               >
-                <div className="border bg-red-500 rounded-md border-black flex max-w-[80%]">
-                  <p className="px-4 py-2 text-2xl">{value.msg}</p>
+                <div className="border bg-red-500 rounded-md border-black flex flex-col max-w-[80%] h-fit">
+                  <p className="px-4 py-2 text-2xl break-words">{value.msg}</p>
                   <p className="self-end text-xs px-2">
                     {new Date(value.created_At).toLocaleTimeString([], {
                       hour: "2-digit",

@@ -250,4 +250,5 @@ export const statusShowerSettinfRef = createRef();
 
 export const closeStatusShowerSetting = ()=>{
   tl12.reverse();
-}
+};
+
