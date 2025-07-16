@@ -5,7 +5,7 @@ import { useGroup } from "./context/GroupContext";
 
 function AllGroups() {
   const socket = useSocket();
-  const [allGroups, setAllGroups] = useState([]);
+  const {allGroups, setAllGroups} = useGroup();
   const [noGroup, setNoGroup] = useState(false);
   const {GroupSlideRef , GroupsSlideRef, groupRoomId , setGroupRoomId} = useGroup();
   const groupRoomIdRef  = useRef();
@@ -24,7 +24,7 @@ function AllGroups() {
       }
       setAllGroups(response.allGroups);
     });
-  }, [noGroup]);
+  }, [noGroup ]);
 
   if (noGroup) {
     return (
