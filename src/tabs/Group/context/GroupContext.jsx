@@ -11,7 +11,7 @@ export const GroupProvider = ({ children}) =>{
     const [allGroups, setAllGroups] = useState([]);
     const [ allmembers , setAllMembers ] = useState([]);
     const GroupDetailsRef = useRef(null);
-    return <GroupContext.Provider value={{ GroupSlideRef , GroupsSlideRef ,groupRoomId , setGroupRoomId , GroupSettingRef ,MembersAddFormRef ,allGroups, setAllGroups , allmembers , setAllMembers ,GroupDetailsRef}}>
+    return <GroupContext.Provider value={{   GroupSlideRef , GroupsSlideRef ,groupRoomId , setGroupRoomId , GroupSettingRef ,MembersAddFormRef ,allGroups, setAllGroups , allmembers , setAllMembers ,GroupDetailsRef}}>
         {children}
     </GroupContext.Provider>
 }

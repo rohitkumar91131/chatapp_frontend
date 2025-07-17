@@ -51,7 +51,7 @@ function GroupProfile() {
           <h1 className="text-xl font-bold">{allmembers?.length} members</h1>
 
           <div className="space-y-2">
-            {allmembers.length > 0 ? (
+            {allmembers?.length > 0 ? (
               allmembers.map((member, index) => (
                 <div key={index} className="flex items-center space-x-3">
                   <img

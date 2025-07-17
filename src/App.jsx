@@ -18,12 +18,13 @@ import { ToastContainer } from 'react-toastify';
 import SearchUser from './Pages/explore/SearchUser';
 import socket from './context/Socket/socket';
 import ProfilePage from './ui/Profile';
-import { Sidebar } from 'lucide-react';
+import { Cookie, Sidebar } from 'lucide-react';
 import LayOut from './ui/LayOut';
 import { TabContextProvider } from './context/tab/TabContext';
 import { NotificationContextProvider } from './context/notification/Notification';
 import { StatusProvider } from './tabs/Status/StatusContext';
 import { GroupProvider } from './tabs/Group/context/GroupContext';
+import Cookies from './components/cookies';
 
 
 // const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -96,6 +97,7 @@ export default function App(){
        <Route path='/qr-login' element={<QR_CODE_LOGIN/>} />
        <Route path='/qr-scan' element={<ProtectedRoute><QRScanComponent/></ProtectedRoute>} />
        <Route path="/search" element={<SearchUser/>} />
+       <Route path='/allow-cookies' element={<Cookies/>} />
        <Route path='/:username' element={<ProfilePage/>} />
 
        </Routes>
