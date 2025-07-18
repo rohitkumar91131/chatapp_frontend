@@ -49,7 +49,7 @@ function AllGroups() {
           <div
             key={index}
             className="flex items-center gap-4 bg-white shadow-sm  p-3 hover:bg-gray-100 transition"
-            onClick={()=> handleGroupOpenClick(group?.room_id)}
+            onClick={()=> handleGroupOpenClick(group?._id)}
           >
             <img
               src={group?.icon}

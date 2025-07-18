@@ -8,6 +8,7 @@ export default function AddMembersForm() {
   const { groupRoomId } = useGroup();
   const socket = useSocket();
   const [selectedFriends, setSelectedFriends] = useState([]);
+  const [noNewFriends , setNoNewFriends ]= useState(false);
 
   useEffect(() => {
     if (!groupRoomId) return;
@@ -17,14 +18,19 @@ export default function AddMembersForm() {
         alert(response.msg);
         return;
       }
+      if(response?.allFriends?.length === 0){
+        setNoNewFriends(true);
+        return;
+      }
       setFriends(response.allFriends || []);
     });
 
     return () => {
       setFriends([]);
       setSelectedFriends([]);
+      setNoNewFriends(false);
     };
-  }, [groupRoomId]);
+  }, [groupRoomId ]);
 
   const handleGroupAddClick = () => {
     socket.emit("add-these-user-ids-to-group-and-room", { groupRoomId, selectedFriends }, (response) => {
@@ -79,7 +85,16 @@ export default function AddMembersForm() {
           className="flex items-center gap-2 px-4 py-3 rounded-md bg-yellow-100 text-black font-medium hover:bg-yellow-200 cursor-pointer transition-all duration-200"
         >
           <img src="return.svg" alt="Return" className="w-5 h-5"           onClick={handleAddFormReturn} />
-          <span>No new friends to add in this group — please find new friends on Vartalaap.</span>
+          {
+            noNewFriends ?
+            (
+              <span>No new friends to add in this group — please find new friends on Vartalaap.</span>
+            )
+            :
+            (
+              <p>Loading..</p>
+            )
+          }
         </div>
       )}
     </div>

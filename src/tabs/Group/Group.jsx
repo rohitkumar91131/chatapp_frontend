@@ -75,9 +75,9 @@ export default function Group() {
 
     }
   return (
-    <div className="grid grid-rows-[1fr_9fr] relative">
+    <div className="grid grid-rows-[1fr_9fr] relative ">
       <div className="flex w-full gap-4 items-center justify-between !p-3 ">
-        <div className="flex gap-4" >
+        <div className="flex gap-4 cursor-pointer" >
           <img src="return.svg" className="h-7 w-7 md:hidden" onClick={BringGroupChatOutOfScreen}/>
           <div className="w-full flex  gap-2" onClick={()=>BringGroupDetails(GroupDetailsRef.current)}>
           <img src={groupBasicDetails?.icon}
@@ -89,7 +89,7 @@ export default function Group() {
           </div>
         </div>
         <span>
-          <img src="setting.svg" className="h-[50px] w-[50px]" onClick={handleOpenSetting}/>
+          <img src="setting.svg" className="h-[50px] w-[50px] cursor-pointer" onClick={handleOpenSetting}/>
           <div className="bg-white flex flex-col !p-2 rounded-md w-fit h-fit !bg-green-500 invisible opacity-0 absolute right-2" ref={GroupSettingRef}>
             <button 
               className="hover:underline rounded-md !p-2 active:scale-95"
@@ -99,7 +99,7 @@ export default function Group() {
              ➕ Add Members
            </button>
             <button className="hover:underline !p-2 active:scale-95" onClick={handleLeaveGroup}>👋 Leave Group</button>
-            <button className="hover:underline !p-2 active:scale-95">Show members</button>
+            <button className="hover:underline !p-2 active:scale-95" onClick={()=>BringGroupDetails(GroupDetailsRef.current)}>Show members</button>
           </div>
           <div className="flex bg-white !p-2 absolute right-2 !bg-blue-500 max-h-[50dvh] border invisible opacity-0 max-w-[80%] w-[50%]" ref={MembersAddFormRef}>
             <AddMembersForm/>

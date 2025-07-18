@@ -50,6 +50,7 @@ export default function Chat() {
 
   useEffect(() => {
     if (!id) return;
+    console.log(id)
     if(chatData && latestMessageRef.current){
       //latestMessageRef.current.scrollIntoView( { behavior : "smooth"})
     }

@@ -6,10 +6,10 @@ import { landingAnimation, landingPageRef, slide1ref, slide2ref, UserPAgeAnaimat
 import VideoCall from "./VideoCall";
 import CallNotification from "./CallNotification";
 import VideoCall2 from "./VideoCall2";
+import { useUser } from "../../context/User/UserContext";
 
 export default function HomePage() {
   const socket = useSocket();
-
   useEffect(() => {
 
     landingAnimation(landingPageRef.current)
@@ -23,6 +23,8 @@ export default function HomePage() {
     socket.on("connect_error", (err) => {
       alert(err.message);
     });
+
+
 
     
 
