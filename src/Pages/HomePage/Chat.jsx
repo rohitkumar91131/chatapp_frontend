@@ -54,8 +54,6 @@ export default function Chat() {
     if(chatData && latestMessageRef.current){
       //latestMessageRef.current.scrollIntoView( { behavior : "smooth"})
     }
-
-    socket.emit("create-or-join-room",id);
     socket.emit("check-user-online-status",id);
     socket.on("offline-user", status=>{
       setOnlineStatus(status)

@@ -24,6 +24,10 @@ export default function Notification() {
   useEffect(() => {
     socket.on("new-notification", handleNewNotification);
 
+    socket.emit("send-all-notifications",{},(res)=>{
+      console.log(res);
+      setNotifications(res.allNotifications);
+    })
     return () => {
       socket.off("new-notification", handleNewNotification);
     };
@@ -36,7 +40,7 @@ export default function Notification() {
       {notifications.length > 0 ? (
         notifications.map((notification, index) => (
           <button key={index} className="w-full text-2xl !p-2 border rounded-md" onClick={()=>handleNotification(notification.from)}>
-            {notification.msg}
+            {notification.msg} from {notification.from.name}
           </button>
         ))
       ) : (
