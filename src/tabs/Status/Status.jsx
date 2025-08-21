@@ -1,10 +1,10 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import StatusHeader from "./StatusHeader"
 import { useSocket } from "../../context/Socket/SocketContext";
 import StatusShower from "./StatusShower";
 import { useStatus } from "./StatusContext";
 import { showStatusShower, statusShowerRef } from "../../ui/gsap";
-import StatusForm from "./StatusForm"; // new form component
+import StatusForm from "./StatusForm";
 
 function Status() {
   const [myStatus, setMyStatus] = useState([]);
@@ -32,6 +32,7 @@ function Status() {
   const handleMyStatusClick = ()=>{
     socket.emit("get-all-my-status",{},(response)=>{
       if(response.success){
+        setMyStatus(response.allStatus);
         if (response.allStatus.length === 0) {
           setShowForm(true);
         } else {
@@ -69,7 +70,9 @@ function Status() {
         />
         <div className="ml-4">
           <p className="font-semibold text-gray-900">My Status</p>
-          <p className="text-sm text-gray-500">Click to add status update</p>
+          <p className="text-sm text-gray-500">
+            {myStatus.length === 0 ? "Click to add status update" : "See your status updates"}
+          </p>
         </div>
       </div>
 
