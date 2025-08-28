@@ -14,12 +14,10 @@ export default function ProtectedRoute ({children}){
                 })
                 let data = await res.json();
                 console.log(data)
-                if(data.success){
-                    
-                }
-                else{
+                if(!data.success){
                     toast(data.msg);
                     navigate("/login")
+                    return;
                 }
             }
             catch(err){

@@ -27,7 +27,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="flex items-center justify-center h-full p-6 bg-gradient-to-br from-purple-100 via-violet-100 to-white dark:from-gray-900 dark:via-gray-800 dark:to-black transition-colors">
+    <div className="flex items-center justify-center h-full p-6">
       <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8 w-full max-w-md animate-fadeIn border border-purple-100 dark:border-gray-700">
         <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mb-6 text-center">
           ⚙️ Settings

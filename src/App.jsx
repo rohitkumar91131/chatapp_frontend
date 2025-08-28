@@ -93,7 +93,7 @@ export default function App(){
          <VideoCall2/>
       </div>
        <Routes>
-        <Route path='/' element={<LayOut/>} />  
+        <Route path='/' element={<ProtectedRoute><LayOut/> </ProtectedRoute>} />  
        {/* <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>} /> */}
        <Route path='/signup' element={<Signup/>}/>
        <Route path='/login' element={<Login/>} />
