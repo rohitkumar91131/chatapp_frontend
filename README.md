@@ -32,5 +32,5 @@ It supports text messaging, QR-based device pairing, peer-to-peer connections, a
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/chatapp.git
+   git clone https://github.com/rohitkumar91131/chatapp.git
    cd chatapp/frontend
