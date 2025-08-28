@@ -4,3 +4,13 @@
     height: "100vh";
     overflow: hidden;
 } */
+
+:root{
+    --bg : white;
+    --text : black
+}
+
+body{
+    background-color: var(--bg);
+    color: var(--text);
+}

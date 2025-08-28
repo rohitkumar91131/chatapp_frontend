@@ -5,8 +5,15 @@ export default function Settings() {
   const [darkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
+    const root = document.documentElement;
+    if (!darkMode) {
+      root.style.setProperty("--bg", "black");
+      root.style.setProperty("--text", "white");
+    } else {
+      root.style.setProperty("--bg", "white");
+      root.style.setProperty("--text", "black");
+    }
+    setDark(!darkMode);
   };
 
   const handleLogout = () => {

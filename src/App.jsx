@@ -25,6 +25,9 @@ import { NotificationContextProvider } from './context/notification/Notification
 import { StatusProvider } from './tabs/Status/StatusContext';
 import { GroupProvider } from './tabs/Group/context/GroupContext';
 import Cookies from './components/cookies';
+import Profile from './Pages/Explore/Profile';
+import Explore from './Pages/Explore/Explore';
+import { ExploreContextProvider } from './Pages/Explore/ExploreContext';
 
 
 // const socket = io(import.meta.env.VITE_BACKEND_URL,{
@@ -67,6 +70,7 @@ export default function App(){
   }, []);
   return (
     <SocketContextProvider>
+      <ExploreContextProvider>
       <GroupProvider>
       <StatusProvider>
       <NotificationContextProvider>
@@ -98,7 +102,7 @@ export default function App(){
        <Route path='/qr-scan' element={<ProtectedRoute><QRScanComponent/></ProtectedRoute>} />
        <Route path="/search" element={<SearchUser/>} />
        <Route path='/allow-cookies' element={<Cookies/>} />
-       <Route path='/:username' element={<ProfilePage/>} />
+       <Route path='/:username' element={<Explore/>} />
 
        </Routes>
       </BrowserRouter>
@@ -108,6 +112,7 @@ export default function App(){
       </NotificationContextProvider>
       </StatusProvider>
       </GroupProvider>
+      </ExploreContextProvider>
     </SocketContextProvider>  
 
   )
