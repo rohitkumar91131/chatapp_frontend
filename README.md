@@ -1,12 +1,36 @@
-# React + Vite
+# 💬 ChatApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A real-time peer-to-peer chat application built with **React, Socket.IO, PeerJS, and Vite**.  
+It supports text messaging, QR-based device pairing, peer-to-peer connections, and more — all styled with **TailwindCSS** and animated using **GSAP**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- ⚡ **Fast & modern frontend** with Vite + React 19  
+- 🔗 **Real-time communication** using Socket.IO and PeerJS  
+- 📱 **QR code scanner & generator** for quick device pairing  
+- 🎨 **TailwindCSS styling** with smooth **GSAP animations**  
+- 🔔 **In-app notifications** powered by React-Toastify  
+- 🔄 **Routing support** with React Router v7  
+- 🔧 **Developer friendly** with ESLint, React hooks linting, and hot-refresh  
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📦 Tech Stack
+
+- **Frontend Framework:** React 19 + Vite  
+- **Styling:** TailwindCSS, GSAP animations  
+- **Networking:** Socket.IO Client, PeerJS, Simple-Peer  
+- **UI Enhancements:** Lucide-React, React-Icons  
+- **Utilities:** Lodash, LocalTunnel  
+- **Other:** QR code generator/scanner, Toast notifications  
+
+---
+
+## 🛠️ Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/chatapp.git
+   cd chatapp/frontend
