@@ -18,13 +18,16 @@ function SearchResult() {
   }, [inputValue]);
 
   useEffect(() => {
-    function handleClickOutside(e) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+    function handleOutside(e){
+      if(wrapperRef.current && !wrapperRef.current.contains(e.target)){
         setIsInputActive(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener("mousedown",handleOutside);
+    return ()=>{
+      document.removeEventListener("mousedown", handleOutside)
+    }  
   }, [setIsInputActive]);
 
   async function fetchAllUsers() {

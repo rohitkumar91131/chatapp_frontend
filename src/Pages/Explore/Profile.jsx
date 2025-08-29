@@ -4,6 +4,7 @@ import { UserPlus, Check, Hourglass, UserCheck,  } from "lucide-react"
 import Header from "./Header";
 import { useSocket } from "../../context/Socket/SocketContext";
 import ProfileSkeleton from "./ProfileSkeleton";
+import { toast } from "react-toastify";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -21,6 +22,7 @@ function Profile() {
 
     socket.emit("check-friendship-status",username ,(res)=>{
       setFriendStatus(res);
+      console.log(res)
     })
     
   },[username])
@@ -31,7 +33,7 @@ function Profile() {
             method : "GET"
         })
         let data = await res.json();
-        console.log(data)
+        //console.log(data)
         if(!data.user){
           setUserError(data.msg);
           return;
@@ -56,7 +58,7 @@ function Profile() {
   }
 
   return (
-    <div className="w-[100dvw] !p-6 flex flex-col items-center bg-gray-50">
+    <div className="w-[100dvw] h-full !p-6 flex flex-col items-center ">
       <div className="flex items-center gap-6">
         <img 
           src={userData?.profilePhoto} 
@@ -67,7 +69,7 @@ function Profile() {
           <h2 className="text-xl font-semibold capitalize">{userData?.username}</h2>
           <p className="text-gray-600">{userData?.name}</p>
           <button 
-
+            onClick={()=>toast("🚧 In Development Phase!")}
             className={`mt-2 flex items-center px-4 py-2 rounded-2xl shadow text-white 
               ${friendStatus === "friends" ? "bg-green-600" : "bg-blue-600"}`}
           >

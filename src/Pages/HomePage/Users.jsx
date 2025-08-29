@@ -4,6 +4,7 @@ import { IncomingCallAnimation, incomingCallRef, landingPageRef, Slide1Animation
 import Header from "../../ui/Header";
 import { useSocket } from "../../context/Socket/SocketContext";
 import { Link } from "react-router-dom";
+import UserSkeleton from "./UsersSkeleton";
 
 
 export default function Users() {
@@ -11,6 +12,7 @@ export default function Users() {
     const userRef = useRef("");
     const {id ,setId} = useUser();
     const [allUsers , setAllUSers] = useState([]);
+    const [loading ,setLoading ] = useState(true);
 
     useEffect(() => {
       socket.emit("get-friends");
@@ -20,6 +22,7 @@ export default function Users() {
           setAllUSers(data.friends);
           console.log("Friends:", data.friends);
         }
+        setLoading(false);
       });
     
       return () => {
@@ -40,21 +43,13 @@ export default function Users() {
 
         // on tapping on a user a room will be created
     }
-  //  if(!allUsers.length >0){
-  //   return (
-  //         <div className="h-[100dvh] w-full flex block md:hidden flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-pink-100 text-gray-800 px-4">
-  //           <div >
-  //           <img
-  //             src="logo.svg"
-  //             alt="Vartalaap Logo"
-  //             className="w-24 h-24 mb-6 drop-shadow-lg animate-bounce-slow"
-  //           />
-  //           <h1 className="text-4xl font-semibold mb-2 tracking-wide">Welcome to Vaartalap</h1>
-  //           <p className="text-lg text-gray-600">Start chatting with your friends in real-time</p>
-  //           </div>
-  //         </div>
-  //       );
-  //  }
+
+    if(loading){
+      return <div className="sc">
+        <Header/>
+        <UserSkeleton/>
+      </div>
+    }
     
   return (
     <div className="w-full ">

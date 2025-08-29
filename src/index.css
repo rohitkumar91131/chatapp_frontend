@@ -14,3 +14,6 @@ body{
     background-color: var(--bg);
     color: var(--text);
 }
+*{
+    scrollbar-width: none;
+}

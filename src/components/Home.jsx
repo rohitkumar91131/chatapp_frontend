@@ -90,7 +90,7 @@ export default function Home() {
         </div>
 
         {user && (
-          <div className="w-full text-left bg-gray-100 p-4 rounded-md overflow-auto max-h-60 border border-gray-300">
+          <div className="w-full text-left p-4 rounded-md overflow-auto max-h-60 border border-gray-300">
             <pre className="text-sm font-mono text-gray-800">{user}</pre>
           </div>
         )}
